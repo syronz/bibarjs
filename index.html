@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf8">
+    <title> Routing </title>
+    <script defer src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script type="module" src="http://localhost:3000/app.router.js"></script>
+
+
+  </head>
+  <body>
+    <style>
+      #main {
+        padding: 10px;
+        border: 3px solid maroon;
+        width: 300px;
+        height: 300px;
+        margin: 20px;
+        color: green;
+      }
+    </style>
+    <button route="/">Root</button>
+    <button route="/login">login</button>
+    <button route="/about">about</button>
+    <button route="/contact">contact</button>
+    <button route="404">404</button>
+    <button route="/user/24/save">user</button>
+    <button func="btnLogin()"> hello </button>
+
+    <div id="main"></div>
+  </body>
+</html>
+
