@@ -1,0 +1,112 @@
+  <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
+    <a class="navbar-brand col-xs-2 col-md-2 mr-0" href="#">Bibar JS</a>
+    <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
+    <ul class="navbar-nav px-3">
+      <li class="nav-item text-nowrap">
+        <a class="nav-link" route="/login" href="#">Sign out</a>
+      </li>
+    </ul>
+  </nav>
+
+  <div class="container-fluid">
+    <div class="row">
+      <nav class="col-xs-2 d-none d-md-block bg-light sidebar">
+        <div class="sidebar-sticky">
+          <ul class="nav flex-column">
+            <li class="nav-item">
+              <a class="nav-link active" route="/dashboard" href="#">
+                <span data-feather="home"></span>
+                Dashboard <span class="sr-only">(current)</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" route="/dashboard/contact" href="#">
+                <span data-feather="file"></span>
+                Contact
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" route="/dashboard/about" href="#">
+                <span data-feather="shopping-cart"></span>
+                about
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" route="/dashboard/about/sub?age=15" href="#">
+                <span data-feather="users"></span>
+                about/sub?age=15
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" route="/dashboard/users" href="#">
+                <span data-feather="bar-chart-2"></span>
+                users
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" route="/dashboard/users/35" href="#">
+                <span data-feather="layers"></span>
+                users/35
+              </a>
+            </li>
+          </ul>
+
+          <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+            <span>Saved reports</span>
+            <a class="d-flex align-items-center text-muted" route="users/35/manage" href="#">
+              <span data-feather="plus-circle"></span>
+            </a>
+          </h6>
+          <ul class="nav flex-column mb-2">
+            <li class="nav-item">
+              <a class="nav-link" route="/dashboard/users/35/manage" href="#">
+                <span data-feather="file-text"></span>
+                users/35/manage
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" route="" href="#">
+                <span data-feather="file-text"></span>
+                Last quarter
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" route="" href="#">
+                <span data-feather="file-text"></span>
+                Social engagement
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" route="" href="#">
+                <span data-feather="file-text"></span>
+                Year-end sale
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+      <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+        <button route="/dashboard">Root</button>
+        <button route="/dashboard/login">login</button>
+        <button route="/dashboard/about">about</button>
+        <button route="/dashboard/about/sub?age=15">about > sub</button>
+        <button route="/dashboard/about/location">about > location</button>
+        <button route="/dashboard/about/history/2016">about > history > 2016</button>
+        <button route="/dashboard/about/history/2016/sort">about > history > 2016 > sort</button>
+        <button route="/dashboard/users">users </button>
+        <button route="/dashboard/users/35">users > 35</button>
+        <button route="/dashboard/users/35/manage">users > 35 > manage</button>
+        <button route="/dashboard/users/35/view">users > 35 > view</button>
+        <button route="/dashboard/contact">contact</button>
+        <button route="/dashboard404">404</button>
+        <button route="/dashboard/user/24/save">user</button>
+        <button func="btnLogin()"> hello </button>
+        <div id="dashboardOutlet">this is dashbord outlet </div>
+
+
+
+
+      </main>
+    </div>
+  </div>
