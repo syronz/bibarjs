@@ -16,7 +16,7 @@ export class Loader {
       const [css, html] = this.generatePath(part)
       const style = await fetch(css).then(stream => stream.text())
       data = await fetch(html).then(stream => stream.text())
-      data = `<style>\n${style}</style>\n{{#with data}}${data}{{/with}}`
+      data = `<style>\n${style}</style><div class="frame ${part}">\n{{#with data}}${data}{{/with}}</div>`
 
 
       this.constructor.cache.set(part, data)

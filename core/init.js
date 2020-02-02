@@ -1,4 +1,5 @@
 import {Loader} from './utils/loader.js'
+import {Router} from './route/router.js'
 
 export default class Init {
 
@@ -29,6 +30,14 @@ export default class Init {
       const f = `this.${e.target.getAttribute('pOnclick')}`
       eval(f)
     }, false ))
+
+    const router = new Router(window.routes, window.baseHref)
+    const activeRoutes = Array.from(document.querySelectorAll(`.${this.module} [route]`))
+    console.log('$$$$$$$$$$$$$$$$', activeRoutes, this.module)
+    activeRoutes.forEach((route) => route.addEventListener('click', (e) => {
+      e.preventDefault()
+      router.navigate(e.target.getAttribute('route'))
+    }, false))
 
   }
 

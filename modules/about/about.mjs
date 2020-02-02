@@ -32,5 +32,10 @@ export default class About extends Init {
     this.data.users = []
     this.render(this.data)
   }
+
+  async middleware() {
+    await this.render()
+    return [null, null]
+  }
   
 }

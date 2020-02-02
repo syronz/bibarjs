@@ -18,4 +18,9 @@ export default class Login extends Init {
     console.log('hello form')
   }
 
+  async middleware() {
+    await this.render()
+    return [null, null]
+  }
+
 }
