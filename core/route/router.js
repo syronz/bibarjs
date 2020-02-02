@@ -5,6 +5,7 @@ class Route {
   }
 }
 
+// Router is main class for manage navigation between pages
 export class Router {
   constructor(arr) {
     this.arr = arr
@@ -15,58 +16,54 @@ export class Router {
   }
 
   add(route) {
-    if ( route.module !== null ) {
-      route.handlers.push( _ => {
-        import(route.module).then(async (cl) => {
-          const lazyClass = new cl.default(main)
-          // const data = await lazyClass.getContent()
-          // main.innerHTML = `<b>${data}</b>`
-
-          // lazyClass.init()
-          if (typeof lazyClass.firstLoad === 'function') {
-            lazyClass.firstLoad()
-          }
-        })
-      })
-    }
-
     this.routes.push(route)
   }
 
+  // parse the arr and set module for each route, it support parent module which in same 
+  // time a path can has more than one handler. Module can be string of an mjs file for
+  // loading dynamic or a regular function
   parse(parentPath, arr, parentHandlers, index) {
-    console.log('arr[i] : ',parentPath + '/' + arr[index].path, [...parentHandlers, arr[index].action], index)
-    let route = new Route
-    if ( typeof arr[index].action === 'function') {
-      route = {
-        path: `${parentPath}/${arr[index].path}`, 
-        handlers: [...parentHandlers, arr[index].action],
-      }
-    } else {
-      route = {
-        path: `${parentPath}/${arr[index].path}`, 
-        handlers: [...parentHandlers],
-      }
+
+    let handler
+
+    // check if the module is path of mjs file or a function, function can be used as a 
+    // middleware or guard
+    switch (typeof arr[index].module) {
+      case 'string':
+        handler = _ => {
+          import(arr[index].module).then(async (cl) => {
+            const lazyClass = new cl.default(main)
+            if (typeof lazyClass.firstLoad === 'function') {
+              lazyClass.firstLoad()
+            }
+          })
+        }
+        break
+      case 'function':
+        handler = arr[index].module
+        break
+      default :
+        console.warn('module should be string or function!!!',typeof arr[index].module, arr[index].module)
     }
-    route.module = null
-    if ( 'module' in arr[index] ) {
-      route.module = arr[index].module
-    }
-    this.add(route)
+
+
+    // add current route to the router.arrays
+    this.add(new Route(`${parentPath}/${arr[index].path}`, [...parentHandlers, handler]))
+
+    // in case of the route has children, the method recursivly parse it
     if ('children' in arr[index]) {
-      if ( typeof arr[index].action === 'function') {
-        this.parse(parentPath + '/' + arr[index].path, arr[index].children,[...parentHandlers, arr[index].action], 0)
-      } else {
-        this.parse(parentPath + '/' + arr[index].path, arr[index].children,[...parentHandlers], 0)
-      }
+      this.parse(parentPath + '/' + arr[index].path, arr[index].children,[...parentHandlers, handler], 0)
     }
-    
+
+    // condition for stop parsing per level, level holded by index
     if ( index < (arr.length - 1) ) {
       this.parse(parentPath, arr,[...parentHandlers], index + 1)
     }
   }
 
-
-
+  // navigate will activate when user click on route button or history browser buttons
+  // (back, forward) clicked or for first load of page. this method getting help from
+  // regex and string functions, url encode not supported yet
   navigate(url) {
     this.param = new Map()
     this.query = new Map()
@@ -100,20 +97,18 @@ export class Router {
         }
 
         route.handlers.map( x => {
-          console.log('>>>>>>.......>>>>>...>>>....>>>>>', x)
           x()
         })
+
+        this.location(route.path) 
       }
     })
 
-    console.log('----------___________--', this.param, this.query)
 
+  }
 
-    // console.log('******', this.routes[0].handlers)
-    // this.routes[3].handlers.map( x => {
-    //   x()
-    // })
-
+  location(route) {
+    window.history.pushState(null, null,  route)
   }
 
 }
