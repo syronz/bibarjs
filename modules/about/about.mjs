@@ -9,6 +9,7 @@ export default class About extends Init {
   }
 
   firstLoad() {
+    console.log('this is first load')
     this.getUsers()
 
   }

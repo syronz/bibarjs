@@ -1,6 +1,29 @@
 import {Router} from './core/route/router.js'
 
-const router = new Router()
+
+const route = [
+  { path: 'home', action: _ => console.log('this is home') },
+  { path: 'login', module: '/modules/login/login.mjs' },
+  { path: 'about', module: '/modules/about/about.mjs', children: [
+    {path: 'sub', action: _ => console.log('this is sub') },
+    {path: 'location', action: _ => console.log('this is location') },
+    {path: 'history/:year', action: _ => console.log('this is history'), children: [
+      {path: 'sort', action: _ => console.log('this is sort') },
+      ],
+    },
+  
+    ],
+  },
+  { path: 'users/:id', action: _ => console.log('this is users'), children: [
+    { path: 'manage', action: _ => console.log('this is user manage') },
+    { path: 'view', action: _ => console.log('this is user view') },
+    ],
+  },
+  { path: 'contact', action: _ => console.log('this is contact') },
+  { path: 'contact', action: _ => console.log('this is contact') },
+]
+
+
 const baseHref = 'http://localhost:3000'
 
 
@@ -23,21 +46,8 @@ const homeHandler = () => {
 // })
 
 
+const router = new Router(route)
 router.root = baseHref
-// const main = document.getElementById('main')
-// router.add({name:'home', path:'/', handler: () => console.log('handler to home')})
-router.add({name:'home', path:'/', handler: homeHandler})
-router.add({name:'about', path:'/about', loader: '/modules/about/about.mjs'})
-router.add({name:'contact', path:'/contact', handler: contactHandler})
-router.add({name:'user', path:'/user/:id/:action', handler: (params) => console.log('handler to user')})
-// router.add({name:'login', path:'/login', handler: loginHandler})
-router.add({name:'login', path:'/login', loader: '/modules/login/login.mjs'})
-
-// if (window.location.pathname != '/') {
-//   router.navigate(window.location.pathname)
-// } else {
-//   router.navigate(window.location.pathname)
-// }
 
 router.navigate(window.location.pathname)
 
