@@ -1,7 +1,9 @@
 import {Router} from './core/route/router.js'
 
 
-const route = [
+window.baseHref = 'http://localhost:3000'
+
+const routes = [
   { path: 'home', module: _ => console.log('this is home') },
   { path: 'login', module: '/modules/login/login.mjs' },
   { path: 'about', module: '/modules/about/about.mjs', children: [
@@ -14,18 +16,18 @@ const route = [
   
     ],
   },
-  { path: 'users/:id', module: _ => console.log('this is users'), children: [
-    { path: 'manage', module: _ => console.log('this is user manage') },
-    { path: 'view', module: _ => console.log('this is user view') },
-    ],
-  },
+  { path: 'users', module: '/modules/user/user.mjs', children: [
+    { path: ':id', module: '/modules/user-view/user-view.mjs', children: [
+      { path: 'manage', module: _ => {console.log('this is users > 35 > manage'); return ['NEXT', 10]} },
+      { path: 'view', module: _ => console.log('this is user view') },
+    ]},
+  ]},
   { path: 'contact', module: _ => console.log('this is contact') },
   { path: 'contact', module: _ => console.log('this is contact') },
 ]
 
 
-const baseHref = 'http://localhost:3000'
-
+const router = new Router(routes, window.baseHref)
 
 const contactHandler = () => {
   const main = document.getElementById('main')
@@ -37,18 +39,6 @@ const homeHandler = () => {
   const main = document.getElementById('main')
   main.innerHTML = 'home';
 }
-
-
-// const helloBtn = document.querySelector('[onclick]')
-// console.log(helloBtn)
-// window.addEventListener('click', _ => {
-//   sayHello()
-// })
-
-
-const router = new Router(route)
-router.root = baseHref
-console.log('router:    ', router)
 
 router.navigate(window.location.pathname)
 

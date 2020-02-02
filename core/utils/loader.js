@@ -3,8 +3,8 @@ export class Loader {
 
   constructor() {}
   generatePath = (str) => {
-    const css = `./modules/${str}/${str}.css`
-    const html = `./modules/${str}/${str}.html`
+    const css = `${window.baseHref}/modules/${str}/${str}.css`
+    const html = `${window.baseHref}/modules/${str}/${str}.html`
     return [css, html]
   }
 

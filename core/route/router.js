@@ -7,8 +7,9 @@ class Route {
 
 // Router is main class for manage navigation between pages
 export class Router {
-  constructor(arr) {
+  constructor(arr, base) {
     this.arr = arr
+    this.base = base
     this.routes = []
     this.parse('',this.arr,[], 0)
     this.param = new Map()
@@ -30,13 +31,26 @@ export class Router {
     // middleware or guard
     switch (typeof arr[index].module) {
       case 'string':
-        handler = _ => {
+        handler = async (outlet) => {
+          /*
           import(arr[index].module).then(async (cl) => {
             const lazyClass = new cl.default(main)
             if (typeof lazyClass.firstLoad === 'function') {
-              lazyClass.firstLoad()
+              await lazyClass.firstLoad()
             }
           })
+          */
+
+          const module = await import(arr[index].module)
+          const lazyClass = new module.default(outlet);
+          let middleResult
+          if (typeof lazyClass.firstLoad === 'function') {
+            await lazyClass.firstLoad()
+          }
+          if (typeof lazyClass.middleware === 'function') {
+            middleResult = await lazyClass.middleware()
+          }
+          return [middleResult[0], middleResult[1]]
         }
         break
       case 'function':
@@ -64,16 +78,16 @@ export class Router {
   // navigate will activate when user click on route button or history browser buttons
   // (back, forward) clicked or for first load of page. this method getting help from
   // regex and string functions, url encode not supported yet
-  navigate(url) {
+  async navigate(fullUrl, noRecord = false) {
     this.param = new Map()
     this.query = new Map()
 
-    const urlArr = url.split('?')
-    url = urlArr[0]
+    const urlArr = fullUrl.split('?')
+    const url = urlArr[0]
     const queryStr = urlArr[1]
 
 
-    this.routes.map( route => {
+    for (const route of this.routes) {
       const params = []
       let preparedReg = route.path.replace(/:(\w+)/g, (_, paramName) => {
         params.push(paramName)
@@ -96,18 +110,28 @@ export class Router {
           })
         }
 
-        route.handlers.map( x => {
-          x()
-        })
 
-        this.location(route.path) 
-      }
-    })
+        let flow 
+        let outlet = main
+        for ( const [index, handler] of route.handlers.entries() ) {
+          [flow, outlet] = await handler(outlet)
+          console.log(".........++++ ", index, flow, outlet)
+        }
+
+        this.location(fullUrl, noRecord)
+
+        return
+      } // if
+    } // for
 
 
-  }
 
-  location(route) {
+  } // navigate
+
+  location(route, noRecord = false) {
+    if (noRecord) {
+      return
+    }
     window.history.pushState(null, null,  route)
   }
 
