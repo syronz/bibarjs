@@ -3,15 +3,22 @@ import {Router} from './route/router.js'
 
 export default class Init {
 
-  constructor(element, module) {
+  constructor(element, module, html, css) {
     this.element = element
     this.loader = new Loader
     this.module = module
+    this.html = html
+    this.css = css
     // this.render()
   }
 
   getContent = async () => {
-    let content = await this.loader.getData(this.module)
+    let content = ''
+    if (this.html) {
+      content = this.loader.mergeCssHtml(this.css,this.module, this.html)
+    } else {
+      content = await this.loader.getData(this.module)
+    }
 
     return content
   }

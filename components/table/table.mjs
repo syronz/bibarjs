@@ -1,4 +1,6 @@
-import { app, Component, html } from 'https://unpkg.com/apprun@next/esm/apprun-html?module';
+// import { app, Component, html } from 'https://unpkg.com/apprun@next/esm/apprun-html?module';
+    // <script src="http://localhost:3000/node_modules/apprun/dist/apprun-html.js?module"></script>
+import { app, Component, html } from '../../node_modules/apprun/esm/apprun-html.js';
 
 
 

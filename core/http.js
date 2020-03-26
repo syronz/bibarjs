@@ -1,6 +1,15 @@
 import {API_URL} from '../environments.js'
 
 
+
+export function html(str) {
+  return str
+}
+
+export function css(str) {
+  return str
+}
+
 async function fetchAsync( method, url, body ) {
   // try {
   const access_token = 22

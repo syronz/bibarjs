@@ -1,0 +1,24 @@
+{
+  "name": "bibar-omega",
+  "version": "1.0.0",
+  "description": "lightweight javascript framework",
+  "main": "app-routing.js",
+  "dependencies": {
+    "apprun": "^3.23.2",
+    "apprun-3.23.2": "^3.23.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/syronz/bibar-omega.git"
+  },
+  "author": "Diako",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/syronz/bibar-omega/issues"
+  },
+  "homepage": "https://github.com/syronz/bibar-omega#readme"
+}

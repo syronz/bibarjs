@@ -54,7 +54,7 @@ export class Router {
         }
         break
       case 'function':
-        handler = arr[index].module
+          handler = arr[index].module
         break
       default :
         console.warn('module should be string or function!!!',typeof arr[index].module, arr[index].module)

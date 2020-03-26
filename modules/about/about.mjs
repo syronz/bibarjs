@@ -1,8 +1,11 @@
 import Init from '../../core/init.js'
+import { Html } from './about.html.js'
+import { Css } from './about.css.js'
 
 
 //apprun start
-import { app, Component, html } from 'https://unpkg.com/apprun@next/esm/apprun-html?module';
+// import { app, Component, html } from 'https://unpkg.com/apprun@next/esm/apprun-html?module';
+import { app, Component, html } from '../../node_modules/apprun/esm/apprun-html.js';
 class Counter extends Component {
   state = 0;
   view = (state) => html`<div>
@@ -19,7 +22,7 @@ app.webComponent('wc-lit-html', Counter);
 
 export default class About extends Init {
   constructor(element) {
-    super(element, 'about')
+    super(element, 'about', Html, Css)
     this.data = {
       age: 88
     }

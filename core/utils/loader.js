@@ -16,12 +16,15 @@ export class Loader {
       const [css, html] = this.generatePath(part)
       const style = await fetch(css).then(stream => stream.text())
       data = await fetch(html).then(stream => stream.text())
-      data = `<style>\n${style}</style><div class="frame ${part}">\n{{#with data}}${data}{{/with}}</div>`
-
+      data = this.mergeCssHtml(style, part, data)
 
       this.constructor.cache.set(part, data)
     } 
 
     return data
+  }
+
+  mergeCssHtml(style, part, data) {
+    return `<style>\n${style}</style><div class="frame ${part}">\n{{#with data}}${data}{{/with}}</div>`
   }
 }
