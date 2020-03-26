@@ -1,12 +1,13 @@
 import {Router} from './core/route/router.js'
+import {BASE_HREF} from './environments.js'
 
 
-window.baseHref = 'http://localhost:3000'
+window.baseHref = BASE_HREF
+
 
 window.routes = [
   // { path: 'dashboard', module: _ => { console.log('this is home'); return ['NEXT', 10] } },
   { path: '', module: _ => { window.location.pathname = '/dashboard' } },
-    // window.history.pushState(null, null,  route)
   { path: 'dashboard', module: '/modules/dashboard/dashboard.mjs', children: [
     { path: 'about', module: '/modules/about/about.mjs', children: [
       {path: 'sub', module: _ => { console.log('this is sub'); return ['NEXT', 10] } },

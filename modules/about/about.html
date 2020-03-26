@@ -9,11 +9,12 @@
   <button pOnclick="deleteUsers()" > delete users </button>
   <button pOnclick="sayHello()" > hello </button>
   <div>
-      <!-- <ul class="pople_list"> -->
-        {{#each users}}
-          <!-- <li>{{this.name}}</li> -->
-          <span>{{this.name}},</span>
-        {{/each}}
-      <!-- </ul> -->
+    <wc-lit-html></wc-lit-html>
+    <!-- <ul class="pople_list"> -->
+    {{#each users}}
+    <!-- <li>{{this.name}}</li> -->
+    <span>{{this.name}},</span>
+    {{/each}}
+    <!-- </ul> -->
   </div>
 </div>

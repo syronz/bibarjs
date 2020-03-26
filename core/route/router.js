@@ -94,7 +94,7 @@ export class Router {
         return '(\\w+)'
       })
 
-      preparedReg += '$'
+      preparedReg = `^${preparedReg}$`
 
       const regPattern = new RegExp(preparedReg)
       let mArr = url.match(regPattern)
@@ -115,7 +115,6 @@ export class Router {
         let outlet = main
         for ( const [index, handler] of route.handlers.entries() ) {
           [flow, outlet] = await handler(outlet)
-          console.log(".........++++ ", index, flow, outlet)
         }
 
         this.location(fullUrl, noRecord)

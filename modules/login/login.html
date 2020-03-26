@@ -13,19 +13,34 @@
         <form>
           <div class="input-group form-group">
             <div class="input-group-prepend">
-              <span class="input-group-text"><i class="fas fa-user"></i></span>
+              <span class="input-group-text"><i data-feather="user"></i></span>
             </div>
-            <input type="text" class="form-control" placeholder="username" autocomplete="username"
-                                                                           id="username">
+            <input 
+              type="text" 
+              class="form-control" 
+              placeholder="username" 
+              autocomplete="username"
+              value="super"
+              id="username">
 
           </div>
           <div class="input-group form-group">
             <div class="input-group-prepend">
-              <span class="input-group-text"><i class="fas fa-key"></i></span>
+              <span class="input-group-text"><i data-feather="key"></i></span>
             </div>
-            <input type="password" class="form-control" placeholder="password"
-                                                        autocomplete="password" id="password">
+            <input
+              type="password" 
+              class="form-control" 
+              placeholder="password"
+              autocomplete="password"
+              value="superadmin"
+              id="password">
           </div>
+          {{#if error}}
+          <div class="alert alert-danger" role="alert">
+            {{ error }}
+          </div>
+          {{/if}}
           <div class="form-group">
             <input type="submit" pOnclick="submit()" value="Login" class="btn float-right login_btn">
           </div>
@@ -33,7 +48,7 @@
       </div>
       <div class="card-footer">
         <div class="d-flex justify-content-center links">
-          created by bibarjs
+          Made with BibarJS
         </div>
       </div>
     </div>

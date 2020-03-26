@@ -1,5 +1,5 @@
 import Init from '../../core/init.js'
-import {NEXT} from '../../core/consts.js'
+import {NEXT, STOP} from '../../core/consts.js'
 
 export default class User extends Init {
   constructor(element) {
@@ -7,16 +7,19 @@ export default class User extends Init {
     this.data = {}
   }
 
-  firstLoad() {
-    console.log('this is first load of dashboard')
-
-  }
+  // firstLoad() {
+  // }
 
   async middleware() {
-    await this.render()
-    const outlet = document.getElementById("dashboardOutlet")
-    console.log('dashboardOutlet', outlet)
-    return [NEXT, outlet]
+    const token = localStorage.getItem('token')
+    if (token) {
+      await this.render()
+      const outlet = document.getElementById("dashboardOutlet")
+      return [NEXT, outlet]
+    }
+    window.location.pathname = '/login' 
+
+    // return [STOP, null]
   }
   
 }

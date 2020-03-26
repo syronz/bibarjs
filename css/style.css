@@ -97,3 +97,17 @@ body {
 .sidebar a {
   cursor: pointer;
 }
+
+
+/* login image */
+/* all relative assets should be defined here, like font-face or images and etc */
+.frame.login {
+  background-image: url('/assets/images/login.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 80% 0;
+  height: 100%;
+  font-family: 'Numans', sans-serif;
+}
+
+@import url('https://fonts.googleapis.com/css?family=Numans');

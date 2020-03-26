@@ -17,7 +17,7 @@ export default class Init {
   }
 
   async render(data) {
-    console.log(".......... render happened!!")
+    console.log(".......... render happened!!", data)
     let tmp = await this.getContent()
 
     var template = Handlebars.compile(tmp)
@@ -33,11 +33,13 @@ export default class Init {
 
     const router = new Router(window.routes, window.baseHref)
     const activeRoutes = Array.from(document.querySelectorAll(`.${this.module} [route]`))
-    console.log('$$$$$$$$$$$$$$$$', activeRoutes, this.module)
     activeRoutes.forEach((route) => route.addEventListener('click', (e) => {
       e.preventDefault()
       router.navigate(e.target.getAttribute('route'))
     }, false))
+
+    // show icons
+    feather.replace()
 
   }
 
