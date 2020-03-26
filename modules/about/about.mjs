@@ -1,17 +1,21 @@
 import Init from '../../core/init.js'
-    import { app, Component, html } from 'https://unpkg.com/apprun@next/esm/apprun-html?module';
-      class Counter extends Component {
-        state = 0;
-        view = (state) => html`<div>
-        <h1>${state}</h1>
-          <button @click=${()=>this.run("add", -1)}>-1</button>
-          <button @click=${()=>this.run("add", +1)}>+1</button>
-        </div>`;
-        update =[
-          ['add', (state, n) => state + n]
-        ]
-      }
-      app.webComponent('wc-lit-html', Counter);
+
+
+//apprun start
+import { app, Component, html } from 'https://unpkg.com/apprun@next/esm/apprun-html?module';
+class Counter extends Component {
+  state = 0;
+  view = (state) => html`<div>
+    <h1>${state}</h1>
+    <button @click=${()=>this.run("add", -1)}>-1</button>
+    <button @click=${()=>this.run("add", +1)}>+1</button>
+  </div>`;
+  update =[
+    ['add', (state, n) => state + n]
+  ]
+}
+app.webComponent('wc-lit-html', Counter);
+//apprun end
 
 export default class About extends Init {
   constructor(element) {
@@ -46,5 +50,5 @@ export default class About extends Init {
     await this.render()
     return [null, null]
   }
-  
+
 }
