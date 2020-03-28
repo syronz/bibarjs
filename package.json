@@ -5,9 +5,13 @@
   "main": "app-routing.js",
   "dependencies": {
     "apprun": "^3.23.2",
-    "apprun-3.23.2": "^3.23.2"
+    "apprun-3.23.2": "^3.23.2",
+    "feather-icons": "^4.26.0",
+    "handlebars": "^4.7.3"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "marked": "^0.8.2"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

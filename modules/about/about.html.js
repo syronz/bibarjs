@@ -13,7 +13,8 @@ export const Html = html`
   <button pOnclick="sayHello()" > hello </button>
   <div>
     <wc-lit-html></wc-lit-html>
-    <bib-table></bib-table>
+    <bib-table prop1="3333"></bib-table>
+    <lit-table myString="ok"></lit-table>
     <!-- <ul class="pople_list"> -->
     {{#each users}}
     <!-- <li>{{this.name}}</li> -->

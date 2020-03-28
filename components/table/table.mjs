@@ -15,7 +15,7 @@ export class Table extends Component {
 
   constructor() {
     super();
-    this.prop1 = 10;
+    // this.prop1 = 10;
     this.prop2 = 0;
   }
 
