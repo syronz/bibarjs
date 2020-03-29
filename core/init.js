@@ -38,6 +38,20 @@ export default class Init {
       eval(f)
     }, false ))
 
+    const elmKeyups = Array.from(document.querySelectorAll(`.${this.module} [pOnkeyup]`))
+    elmKeyups.forEach((btn) => btn.addEventListener('keyup', (e) => {
+      e.preventDefault()
+      const f = `this.${e.target.getAttribute('pOnkeyup')}`
+      eval(f)
+    }, false ))
+
+    const elms = Array.from(document.querySelectorAll(`.${this.module} [pOnchange]`))
+    elms.forEach((btn) => btn.addEventListener('change', (e) => {
+      e.preventDefault()
+      const f = `this.${e.target.getAttribute('pOnchange')}`
+      eval(f)
+    }, false ))
+
     const router = new Router(window.routes, window.baseHref)
     const activeRoutes = Array.from(document.querySelectorAll(`.${this.module} [route]`))
     activeRoutes.forEach((route) => route.addEventListener('click', (e) => {

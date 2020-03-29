@@ -1,6 +1,21 @@
 import { html } from '../../core/http.js'
 
 export const Html = html`
+
+<nav> 
+  <button pOnclick="toggleSidebar()"><i data-feather="menu"></i></button>
+  <button><i data-feather="star"></i></button>
+  <button> Omega </button>
+  <div class="search-box">
+    <i data-feather="search"></i>
+    <input type="text" id="search-input">
+  </div>
+  <div></div>
+  <button><i data-feather="bell"></i></button>
+  <button><i data-feather="settings"></i></button>
+  <button route="/login"><i data-feather="log-out"></i></button>
+</nav>
+
 <a class="navbar-brand col-xs-2 col-md-2 mr-0" route="/dashboard" href="#">Bibar JS</a>
 <a class="nav-link" route="/login" href="#">Sign out</a>
 <hr>

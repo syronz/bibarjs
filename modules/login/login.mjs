@@ -1,11 +1,14 @@
 import Init from '../../core/init.js'
 import {post} from '../../core/http.js'
+import { Html } from './login.html.js'
+import { Css } from './login.css.js'
 
 export default class Login extends Init {
   constructor(element) {
-    super(element, 'login')
+    super(element, 'login', Html, Css)
     this.data = {
-      error2: 'this is error'
+      username: 'super3',
+      password: 'superadmin'
     }
   }
 
@@ -31,6 +34,14 @@ export default class Login extends Init {
       this.render()
       console.warn(err)
     }
+  }
+
+  change() {
+    console.log(document.getElementById('username').value);
+    this.data.error = null;
+    this.data.username = document.getElementById('username').value
+    this.data.password = document.getElementById('password').value
+    this.render()
   }
 
   async middleware() {

@@ -2,6 +2,15 @@ import {Router} from './core/route/router.js'
 import {BASE_HREF} from './environments.js'
 import { default as Frame } from './modules/frame/frame.mjs'
 
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker
+      .register('./sw-cached-pages.js')
+      .then(reg => console.log('Service Worker: Registered (Pages)'))
+      .catch(err => console.log(`Service Worker: Error: ${err}`));
+  });
+}
+
 
 window.baseHref = BASE_HREF
 

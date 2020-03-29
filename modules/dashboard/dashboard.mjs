@@ -9,6 +9,10 @@ export default class User extends Init {
     this.data = {}
   }
 
+  async toggleSidebar() {
+    console.log("hello");
+  }
+
 
 
   async middleware() {
