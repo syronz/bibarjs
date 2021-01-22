@@ -59,8 +59,6 @@ export default class Init {
       router.navigate(e.target.getAttribute('route'))
     }, false))
 
-    // show icons
-    feather.replace()
 
   }
 

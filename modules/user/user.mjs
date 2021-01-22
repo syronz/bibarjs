@@ -1,5 +1,5 @@
 import Init from '../../core/init.js'
-import {NEXT} from '../../core/consts.js'
+import { NEXT } from '../../core/consts.js'
 import { Html } from './user.html.js'
 import { Css } from './user.css.js'
 

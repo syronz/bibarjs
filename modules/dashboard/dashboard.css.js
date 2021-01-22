@@ -38,17 +38,7 @@ nav button:focus {
   outline: none;
 }
 
-nav .feather {
-  margin-top: 5px;
-  width: 20px;
-  height: 20px;
-}
 
-nav .search-box .feather {
-  margin-top: 0;
-  width: 15px;
-  height: 15px;
-}
 
 nav .search-box {
   margin-left: 8px;

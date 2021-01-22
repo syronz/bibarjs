@@ -3,48 +3,41 @@ import { html } from '../../core/http.js'
 export const Html = html`
 
 <nav> 
-  <button pOnclick="toggleSidebar()"><i data-feather="menu"></i></button>
-  <button><i data-feather="star"></i></button>
+  <button pOnclick="toggleSidebar()">menu</button>
+  <button>star</button>
   <button> Omega </button>
   <div class="search-box">
-    <i data-feather="search"></i>
     <input type="text" id="search-input">
   </div>
   <div></div>
-  <button><i data-feather="bell"></i></button>
-  <button><i data-feather="settings"></i></button>
-  <button route="/login"><i data-feather="log-out"></i></button>
+  <button>bell</button>
+  <button>setting</button>
+  <button route="/login">logout</button>
 </nav>
 
 <a class="navbar-brand col-xs-2 col-md-2 mr-0" route="/dashboard" href="#">Bibar JS</a>
 <a class="nav-link" route="/login" href="#">Sign out</a>
 <hr>
 <a class="nav-link active" route="/dashboard" href="#">
-  <span data-feather="home"></span>
   Dashboard <span class="sr-only">(current)</span>
 </a>
 <a class="nav-link" route="/dashboard/contact" href="#">
-  <span data-feather="file"></span>
   Contact
 </a>
 <a class="nav-link" route="/dashboard/about" href="#">
-  <span data-feather="shopping-cart"></span>
   about
 </a>
 <a class="nav-link" route="/dashboard/about/sub?age=15" href="#">
-  <span data-feather="users"></span>
   about/sub?age=15
 </a>
 <a class="nav-link" route="/dashboard/users" href="#">
-  <span data-feather="bar-chart-2"></span>
   users
 </a>
 <a class="nav-link" route="/dashboard/users/35" href="#">
-  <span data-feather="layers"></span>
   users/35
 </a>
 <a class="d-flex align-items-center text-muted" route="users/35/manage" href="#">
-  <span data-feather="plus-circle"></span>
+  plus
 </a>
 
 
