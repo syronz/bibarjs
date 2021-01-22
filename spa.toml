@@ -1,0 +1,4 @@
+#it can use for another directory
+port = "3000"
+public_dir = "."
+index_file = "index.html"
