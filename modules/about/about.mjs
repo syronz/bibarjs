@@ -1,9 +1,29 @@
 import Init from '../../core/init.js'
+<<<<<<< HEAD
 import { Html } from './about.html.js'
 import { Css } from './about.css.js'
 
 
 //apprun start
+=======
+
+
+//apprun start
+import { app, Component, html } from 'https://unpkg.com/apprun@next/esm/apprun-html?module';
+class Counter extends Component {
+  state = 0;
+  view = (state) => html`<div>
+    <h1>${state}</h1>
+    <button @click=${()=>this.run("add", -1)}>-1</button>
+    <button @click=${()=>this.run("add", +1)}>+1</button>
+  </div>`;
+  update =[
+    ['add', (state, n) => state + n]
+  ]
+}
+app.webComponent('wc-lit-html', Counter);
+//apprun end
+>>>>>>> a7a01925c8e2d497dea656dd84cdfefa619caeb6
 
 export default class About extends Init {
   constructor(element) {

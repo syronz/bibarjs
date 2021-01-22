@@ -12,7 +12,12 @@ export const Html = html`
   <button pOnclick="deleteUsers()" > delete users </button>
   <button pOnclick="sayHello()" > hello </button>
   <div>
+<<<<<<< HEAD:modules/about/about.html.js
     <lit-table myString="ok"></lit-table>
+=======
+    <wc-lit-html></wc-lit-html>
+    <bib-table></bib-table>
+>>>>>>> a7a01925c8e2d497dea656dd84cdfefa619caeb6:modules/about/about.html
     <!-- <ul class="pople_list"> -->
     {{#each users}}
     <!-- <li>{{this.name}}</li> -->
