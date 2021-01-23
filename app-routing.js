@@ -1,5 +1,5 @@
-import {Router} from './core/route/router.js'
-import {BASE_HREF} from './environments.js'
+import { Router } from './core/route/router.js'
+import { BASE_HREF } from './environments.js'
 import { default as Frame } from './modules/frame/frame.mjs'
 
 // if ('serviceWorker' in navigator) {
@@ -57,7 +57,7 @@ const homeHandler = () => {
   main.innerHTML = 'home';
 }
 
-router.navigate(window.location.pathname)
+router.navigate(window.location.pathname+window.location.search)
 
 window.addEventListener('popstate', () => {
   router.navigate(window.location.pathname, true)

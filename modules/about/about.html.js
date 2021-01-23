@@ -5,7 +5,7 @@ export const Html = html`
   <p>
     about works fine!
   </p>
-  <div>
+  <div class="age">
     handlebars: {{ age }}
   </div>
   <button pOnclick="getUsers()" > get users </button>

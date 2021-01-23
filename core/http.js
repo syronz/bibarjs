@@ -1,7 +1,5 @@
 import {API_URL} from '../environments.js'
 
-
-
 export function html(str) {
   return str
 }

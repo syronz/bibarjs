@@ -85,6 +85,7 @@ export class Router {
     const urlArr = fullUrl.split('?')
     const url = urlArr[0]
     const queryStr = urlArr[1]
+    console.log(">>>> this is navigate", fullUrl, this.routes)
 
 
     for (const route of this.routes) {
@@ -103,6 +104,7 @@ export class Router {
           this.param.set(params[i], mArr[k])
         }
 
+        console.log(">>> ", queryStr)
         if ( queryStr !== undefined ) {
           queryStr.split('&').map(x => {
             const parts = x.split('=')

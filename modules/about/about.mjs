@@ -1,12 +1,9 @@
 import Init from '../../core/init.js'
-// <<<<<<< HEAD
 import { Html } from './about.html.js'
 import { Css } from './about.css.js'
 
 
 /*
-//apprun start
-=======
 
 
 //apprun start
@@ -24,7 +21,6 @@ class Counter extends Component {
 }
 app.webComponent('wc-lit-html', Counter);
 //apprun end
->>>>>>> a7a01925c8e2d497dea656dd84cdfefa619caeb6
 */
 
 export default class About extends Init {
@@ -42,7 +38,10 @@ export default class About extends Init {
   sayHello = _ => {
     console.log("hello from about.mjs")
     this.data.age = 95;
+    let oo = document.querySelector(".age");
+    console.log(oo);
     this.render(this.data)
+    document.querySelector(".age").style.backgroundColor = "red";
   }
 
   getUsers = async _ => {
