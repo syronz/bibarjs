@@ -22,11 +22,12 @@ window.routes = [
   { path: 'frame', module: _ => { console.log('this is frame'); return ['NEXT', 10] } },
   { path: 'frame2', module: '/modules/frame/frame.mjs' },
   { path: 'dashboard', module: '/modules/dashboard/dashboard.mjs', children: [
+    { path: 'content/:contentID', module: '/modules/about-content/about-content.mjs' },
     { path: 'about', module: '/modules/about/about.mjs', children: [
-      {path: 'sub', module: _ => { console.log('this is sub'); return ['NEXT', 10] } },
-      {path: 'location', module: _ => { console.log('this is location'); return ['NEXT', 10] } },
-      {path: 'history/:year', module: _ => { console.log('this is history'); return ['NEXT', 10] }, children: [
-        {path: 'sort', module: _ => { console.log('this is sort'); return ['NEXT', 10] } },
+      { path: 'sub', module: _ => { console.log('this is sub'); return ['NEXT', 10] } },
+      { path: 'location', module: _ => { console.log('this is location'); return ['NEXT', 10] } },
+      { path: 'history/:year', module: (x) => { console.log('this is history..',x); return ['NEXT', 10] }, children: [
+        { path: 'sort', module: _ => { console.log('this is sort'); return ['NEXT', 10] } },
         ],
       },
     

@@ -14,11 +14,14 @@ export default class Init {
 
   getContent = async () => {
     let content = ''
+    /*
     if (this.html) {
       content = this.loader.mergeCssHtml(this.css,this.module, this.html)
     } else {
       content = await this.loader.getData(this.module)
     }
+    */
+      content = this.loader.mergeCssHtml(this.css,this.module, this.html)
 
     return content
   }
@@ -31,6 +34,8 @@ export default class Init {
     tmp = template({ data: this.data})
     this.element.innerHTML = `${tmp}`
 
+    /*
+     * delete this style
     const btns = Array.from(document.querySelectorAll(`.${this.module} [pOnclick]`))
     btns.forEach((btn) => btn.addEventListener('click', (e) => {
       e.preventDefault()
@@ -52,6 +57,7 @@ export default class Init {
       eval(f)
     }, false ))
 
+    */
     const router = new Router(window.routes, window.baseHref)
     const activeRoutes = Array.from(document.querySelectorAll(`.${this.module} [route]`))
     activeRoutes.forEach((route) => route.addEventListener('click', (e) => {

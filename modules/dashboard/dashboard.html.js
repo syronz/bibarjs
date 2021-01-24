@@ -42,11 +42,14 @@ export const Html = html`
 
 
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+
   <button route="/dashboard">Root</button>
   <button route="/dashboard/login">login</button>
   <button route="/dashboard/about">about</button>
   <button route="/dashboard/about/sub?age=15">about > sub</button>
   <button route="/dashboard/about/location">about > location</button>
+  <button route="/dashboard/content/112">content > 112</button>
+  <button route="/dashboard/content/112?search=99&limit=15">content > 112 ? search=99 & limit 15</button>
   <button route="/dashboard/about/history/2016">about > history > 2016</button>
   <button route="/dashboard/about/history/2016/sort">about > history > 2016 > sort</button>
   <button route="/dashboard/users">users </button>

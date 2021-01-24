@@ -50,6 +50,10 @@ export class Router {
           if (typeof lazyClass.middleware === 'function') {
             middleResult = await lazyClass.middleware()
           }
+          if (typeof lazyClass.middleware === 'undefined') {
+            await lazyClass.render()
+            middleResult = [null, null]
+          }
           return [middleResult[0], middleResult[1]]
         }
         break
@@ -85,8 +89,6 @@ export class Router {
     const urlArr = fullUrl.split('?')
     const url = urlArr[0]
     const queryStr = urlArr[1]
-    console.log(">>>> this is navigate", fullUrl, this.routes)
-
 
     for (const route of this.routes) {
       const params = []
@@ -104,7 +106,8 @@ export class Router {
           this.param.set(params[i], mArr[k])
         }
 
-        console.log(">>> ", queryStr)
+        console.log("........>>>>>>>>>>>", this.param)
+
         if ( queryStr !== undefined ) {
           queryStr.split('&').map(x => {
             const parts = x.split('=')
