@@ -29,11 +29,9 @@ export default class About extends Init {
     this.data = {
       age: 88
     }
-  }
 
-  // firstLoad() {
-  //   // this.getUsers()
-  // }
+
+  }
 
   sayHello = _ => {
     console.log("hello from about.mjs")
@@ -57,9 +55,20 @@ export default class About extends Init {
     this.render(this.data)
   }
 
-  async middleware() {
-    await this.render()
-    return [null, null]
+  async start() {
+    const btn = document.querySelector('#getUsers')
+    btn.addEventListener('click',async (e) => {
+      const users = await fetch('https://jsonplaceholder.typicode.com/users')
+        .then((res) => res.json())
+      this.data.users = users
+
+      this.render(this.data)
+    })
   }
+
+  // async middleware() {
+  //   await this.render()
+  //   return [null, null]
+  // }
 
 }

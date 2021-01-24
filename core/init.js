@@ -13,17 +13,16 @@ export default class Init {
   }
 
   getContent = async () => {
-    let content = ''
     /*
+    let content = ''
     if (this.html) {
       content = this.loader.mergeCssHtml(this.css,this.module, this.html)
     } else {
       content = await this.loader.getData(this.module)
     }
     */
-      content = this.loader.mergeCssHtml(this.css,this.module, this.html)
 
-    return content
+    return this.loader.mergeCssHtml(this.css,this.module, this.html)
   }
 
   async render(data) {

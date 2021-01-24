@@ -32,26 +32,16 @@ export class Router {
     switch (typeof arr[index].module) {
       case 'string':
         handler = async (outlet) => {
-          /*
-          import(arr[index].module).then(async (cl) => {
-            const lazyClass = new cl.default(main)
-            if (typeof lazyClass.firstLoad === 'function') {
-              await lazyClass.firstLoad()
-            }
-          })
-          */
 
           const module = await import(arr[index].module)
           const lazyClass = new module.default(outlet);
           let middleResult
-          if (typeof lazyClass.firstLoad === 'function') {
-            await lazyClass.firstLoad()
-          }
           if (typeof lazyClass.middleware === 'function') {
             middleResult = await lazyClass.middleware()
           }
           if (typeof lazyClass.middleware === 'undefined') {
             await lazyClass.render()
+            lazyClass.start('delete me')
             middleResult = [null, null]
           }
           return [middleResult[0], middleResult[1]]

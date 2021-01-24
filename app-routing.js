@@ -2,19 +2,7 @@ import { Router } from './core/route/router.js'
 import { BASE_HREF } from './environments.js'
 import { default as Frame } from './modules/frame/frame.mjs'
 
-// if ('serviceWorker' in navigator) {
-//   window.addEventListener('load', () => {
-//     navigator.serviceWorker
-//       .register('./sw-cached-pages.js')
-//       .then(reg => console.log('Service Worker: Registered (Pages)'))
-//       .catch(err => console.log(`Service Worker: Error: ${err}`));
-//   });
-// }
-
-
 window.baseHref = BASE_HREF
-
-
 
 window.routes = [
   // { path: 'dashboard', module: _ => { console.log('this is home'); return ['NEXT', 10] } },
@@ -30,7 +18,6 @@ window.routes = [
         { path: 'sort', module: _ => { console.log('this is sort'); return ['NEXT', 10] } },
         ],
       },
-    
       ],
     },
     { path: 'users', module: '/modules/user/user.mjs', children: [

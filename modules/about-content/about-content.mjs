@@ -4,10 +4,15 @@ import { Css } from './about-content.css.js'
 
 export default class About extends Init {
   constructor(element) {
-    super(element, 'content', Html, Css)
+    super(element, 'about-content', Html, Css)
     this.data = {
       age: 88
     }
+  }
+
+  async start(v) {
+    console.log('....>>..', v)
+    
   }
 
 }
