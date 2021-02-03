@@ -12,8 +12,12 @@ export class Router {
     this.base = base
     this.routes = []
     this.parse('',this.arr,[], 0)
-    this.param = new Map()
-    this.query = new Map()
+    this.data = {
+      param: new Map(),
+      query: new Map(),
+    }
+    // this.param = new Map()
+    // this.query = new Map()
   }
 
   add(route) {
@@ -41,7 +45,7 @@ export class Router {
           }
           if (typeof lazyClass.middleware === 'undefined') {
             await lazyClass.render()
-            lazyClass.start('delete me')
+            lazyClass.start(this.data)
             middleResult = [null, null]
           }
           return [middleResult[0], middleResult[1]]
@@ -73,8 +77,8 @@ export class Router {
   // (back, forward) clicked or for first load of page. this method getting help from
   // regex and string functions, url encode not supported yet
   async navigate(fullUrl, noRecord = false) {
-    this.param = new Map()
-    this.query = new Map()
+    // this.param = new Map()
+    // this.query = new Map()
 
     const urlArr = fullUrl.split('?')
     const url = urlArr[0]
@@ -93,15 +97,15 @@ export class Router {
       let mArr = url.match(regPattern)
       if (mArr !== null) {
         for ( let i = 0, k = 1; i < params.length; i++, k++) {
-          this.param.set(params[i], mArr[k])
+          this.data.param.set(params[i], mArr[k])
         }
 
-        console.log("........>>>>>>>>>>>", this.param)
+        console.log("........>>>>>>>>>>>", this.data.param)
 
         if ( queryStr !== undefined ) {
           queryStr.split('&').map(x => {
             const parts = x.split('=')
-            this.query.set(parts[0], parts[1])
+            this.data.query.set(parts[0], parts[1])
           })
         }
 
