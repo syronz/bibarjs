@@ -145,6 +145,3 @@ initLoadWords = (request) => {
 }
 
 initWords(initLoadWords);
-
-/*
-*/
