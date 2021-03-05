@@ -26,7 +26,7 @@ export default class Init {
   }
 
   async render(data) {
-    console.log(".......... render happened!!", data)
+    // console.log(".......... render happened!!", data)
     let tmp = await this.getContent()
 
     var template = Handlebars.compile(tmp)

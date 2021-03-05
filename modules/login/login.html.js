@@ -37,7 +37,7 @@ export const Html = html`
         {{ error }}
       {{/if}}
     </span>
-      <button pOnclick="submit()">Login</button>
+      <button id="btnLogin" >Login</button>
     </div>
   </div>
   <div></div>

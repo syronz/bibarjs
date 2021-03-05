@@ -100,7 +100,7 @@ export class Router {
           this.data.param.set(params[i], mArr[k])
         }
 
-        console.log("........>>>>>>>>>>>", this.data.param)
+        // console.log("........>>>>>>>>>>>", this.data.param)
 
         if ( queryStr !== undefined ) {
           queryStr.split('&').map(x => {

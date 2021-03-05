@@ -17,6 +17,7 @@ export const Html = html`
 
 <p> !!!! </p>
     <p> <di-ct>hello</di-ct> </p>
+    <p> <di-ct>bye</di-ct> </p>
 <a class="navbar-brand col-xs-2 col-md-2 mr-0" route="/dashboard" href="#">Bibar JS</a>
 <a class="nav-link" route="/login" href="#">Sign out</a>
 <hr>

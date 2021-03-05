@@ -1,3 +1,4 @@
+const DBVERSION = 1;
 function promiseReq(req) {
   return new Promise((resolve, reject) => {
     req.onsuccess = () => resolve(req.result);
@@ -23,62 +24,73 @@ class WordDB {
     };
     let db = await promiseReq(dbReq);
 
-    // Increment a counter 10 times in the same transaction.
     let tx = db.transaction('words', 'readwrite');
     this.store = tx.objectStore('words');
+  }
 
+  async get(key) {
+    let val = await promiseReq(this.store.get(key));
+    console.log('... val is ', val);
+    return val
 
-    // await promiseReq(this.store.put(1, 'counter'));
   }
 
   async inc() {
     let val = await promiseReq(this.store.get('counter'));
-    console.log('4$$$$$$44', val);
     if (typeof val == undefined) {
       val = { id: "counter", en: 3, ku: "xwa hafiz" };
     }
     val.en += 1;
     await promiseReq(this.store.put(val));
   }
-
-
-
-
 }
 
-// async function test() {
-//   // Open database.
-//   let dbReq = indexedDB.open('test', 1);
-//   dbReq.onupgradeneeded = () => {
-//     let db = dbReq.result;
-//     db.createObjectStore('counters');
-//   };
-//   let db = await promiseReq(dbReq);
 
-//   // Increment a counter 10 times in the same transaction.
-//   let tx = db.transaction('counters', 'readwrite');
-//   let store = tx.objectStore('counters');
-//   for (let i=0; i < 10; i++) {
-//     let val = await promiseReq(store.get('counter'));
-//     if (typeof val !== 'number') {
-//       val = 0;
-//     }
-//     val += 1;
-//     await promiseReq(store.put(val, 'counter'));
-//   }
+class Dict extends HTMLElement {
+  constructor() {
+    super();
 
-//   // Output the final value.
-//   let finalVal = await promiseReq(store.get('counter'));
-//   console.log('Final value', finalVal);
-// }
+    console.log("kkk")
 
-// console.log('Starting test');
-// test().catch(err => console.error('Test failed', err));
+    const pElem = document.createElement('span');
+    const id = this.innerHTML
+
+    const shadowRoot = this.attachShadow({mode: 'open'});
+
+    // getFn('bye')
+
+    pElem.textContent = `**changed**`;
+    shadowRoot.appendChild(pElem);
+
+    // db = request.result;
+    // const tx = db.transaction("words", "readonly");
+    // const store = tx.objectStore("words");
+    // let q1 = store.get('hello');
+
+
+    // console.log('+++++++++++ 1', q1);
+    // q1.onsuccess = function() {
+    //   console.log('.........', q1.result);
+    //   if (q1.result === undefined) {
+    //     pElem.textContent = `**${id}**`;
+    //   } else {
+    //     if ('ku' in q1.result) {
+    //       pElem.textContent = q1.result.ku;
+    //     } else {
+    //       pElem.textContent = `*${id}*`;
+    //     }
+    //   }
+    //   shadowRoot.appendChild(pElem);
+    // }
+  }
+}
+
+customElements.define('di-ct', Dict);
 
 (async () => {
   try {
     wordDB = new WordDB()
-    await wordDB.open(2)
+    await wordDB.open(DBVERSION)
     await wordDB.inc()
   } catch(err) {
     console.log(err)

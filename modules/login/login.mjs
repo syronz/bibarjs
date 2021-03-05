@@ -10,6 +10,7 @@ export default class Login extends Init {
       username: 'super3',
       password: 'superadmin'
     }
+
   }
 
   sayHello() {
@@ -36,17 +37,26 @@ export default class Login extends Init {
     }
   }
 
-  change() {
-    console.log(document.getElementById('username').value);
-    this.data.error = null;
-    this.data.username = document.getElementById('username').value
-    this.data.password = document.getElementById('password').value
-    this.render()
-  }
 
-  async middleware() {
-    await this.render()
-    return [null, null]
+  async start() {
+    const btn = document.querySelector('#btnLogin')
+    console.log(btn)
+    btn.addEventListener('click',async (e) => {
+      try {
+        const username = document.getElementById('username').value
+        const password = document.getElementById('password').value
+        const resp = await post('/login',{username, password})
+        console.log(resp)
+        localStorage.setItem('userData', JSON.stringify(resp.data.username))
+        localStorage.setItem('token', resp.data.user_extra.token)
+        window.token = resp.data.user_extra.token
+        window.location.pathname = '/dashboard' 
+      } catch(err) {
+        this.data.error = err.message
+        this.render()
+        console.warn(err)
+      }
+    })
   }
 
 }
