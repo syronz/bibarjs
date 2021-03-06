@@ -6,16 +6,16 @@ const navs = [
   {
     scope: "settings",
     links: [
-      { name: "roles", resource: "role:read" },
-      { name: "users", resource: "user:read" },
+      { name: "roles", resource: "role:read", route: "/settings/roles" },
+      { name: "users", resource: "user:read", route: "/settings/users" },
     ]
   },
   {
     scope: "accounting",
     links: [
-      { name: "accounts", resource: "account:read" },
-      { name: "receipt vouchers", resource: "all" },
-      { name: "payment vouchers", resource: "all" },
+      { name: "accounts", resource: "account:read", route: "/accounting/accounts" },
+      { name: "receipt vouchers", resource: "all", route: "/accounting/receipts" },
+      { name: "payment vouchers", resource: "all", route: "/accounting/payments" },
     ]
   },
 
@@ -30,7 +30,7 @@ class SideBar extends HTMLElement {
 
     const divElem = document.createElement('div');
     // divElem.textContent = this.getAttribute('status');
-    divElem.innerHTML = '<di-ct>hello</di-ct>';
+    divElem.innerHTML = '<go-to route="/dashboard/about/location"><di-ct>hello</di-ct></go-to>';
 
     // const deleteTest = document.createElement('di-ct').textContent("hello");
     // deleteTest.innerHTML = "hello";
@@ -45,13 +45,12 @@ class SideBar extends HTMLElement {
         if (k.resource === "all" || resources.includes(k.resource)) {
           const link = document.createElement('p');
           // link.textContent = '>> ' + k.name;
-          link.innerHTML = `<di-ct>${k.name}</di-ct>`;
+          link.innerHTML = `<go-to route="${k.route}"><di-ct>${k.name}</di-ct></go-to>`;
           link.setAttribute('route', '/login');
           divElem.appendChild(link);
         }
       });
 
-      console.log(v)
     });
 
 

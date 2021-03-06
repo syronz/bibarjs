@@ -1,9 +1,10 @@
 window.DBVERSION = 2;
 window.LANG = 'ku';
 
-import { WordDB } from './core/word-db.js';
-import './core/custom-elements/dict.js';
-import './core/custom-elements/side-bar.js';
+import { WordDB } from "./core/word-db.js";
+import "./core/custom-elements/dict.js";
+import "./core/custom-elements/side-bar.js";
+import "./core/custom-elements/goto.js";
 
 
 (async () => {

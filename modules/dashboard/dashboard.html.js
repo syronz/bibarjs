@@ -12,11 +12,12 @@ export const Html = html`
     <div></div>
     <button> <span class="material-icons">notifications</span> </button>
     <button> <span class="material-icons">settings</span> </button>
-    <button> <span route="/login" class="material-icons">exit_to_app</span> </button>
+    <button> <go-to route="/login"> <span class="material-icons">exit_to_app</span> </go-to> </button>
     <!-- <button route="/login">&#128682;</button> -->
   </nav>
 
-  <p route="/login"> go to login </p>
+  <!-- <p route="/login"> ooo <div class="deleteThis"> go to login </div> </p> -->
+  <div> <go-to route="/login"> go to login inside go-to </go-to> </div>
   <side-bar status="open"></side-bar>
 
   <p> !!!! </p>
