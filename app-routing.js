@@ -51,9 +51,4 @@ window.addEventListener('popstate', () => {
   router.navigate(window.location.pathname, true)
 })
 
-// const activeRoutes = Array.from(document.querySelectorAll('[route]'))
-// activeRoutes.forEach((route) => route.addEventListener('click', (e) => {
-//   e.preventDefault()
-//   router.navigate(e.target.getAttribute('route'))
-// }, false))
 

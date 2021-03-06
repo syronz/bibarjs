@@ -58,11 +58,12 @@ export default class Init {
 
     */
     const router = new Router(window.routes, window.baseHref)
-    const activeRoutes = Array.from(document.querySelectorAll(`.${this.module} [route]`))
+    // const activeRoutes = Array.from(document.querySelectorAll(`.${this.module} [route]`))
+    const activeRoutes = Array.from(document.querySelectorAll(`.${this.module} [route]`));
     activeRoutes.forEach((route) => route.addEventListener('click', (e) => {
-      e.preventDefault()
-      router.navigate(e.target.getAttribute('route'))
-    }, false))
+      e.preventDefault();
+      router.navigate(e.target.getAttribute('route'));
+    }, false));
 
 
   }

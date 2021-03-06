@@ -79,6 +79,7 @@ export class Router {
   async navigate(fullUrl, noRecord = false) {
     // this.param = new Map()
     // this.query = new Map()
+    console.log(fullUrl);
 
     const urlArr = fullUrl.split('?')
     const url = urlArr[0]

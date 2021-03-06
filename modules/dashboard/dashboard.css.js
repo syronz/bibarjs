@@ -22,6 +22,7 @@ nav {
 }
 
 nav button {
+  filter: grayscale(100%);
   padding: 0;
   margin: 0;
   background: none;
@@ -33,6 +34,7 @@ nav button {
 }
 nav button:hover {
   background: #47599f;
+  filter: grayscale(0);
 }
 nav button:focus {
   outline: none;

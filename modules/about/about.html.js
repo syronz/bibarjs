@@ -4,6 +4,7 @@ export const Html = html`
 <div class="frame about">
   <p>
     about works fine!
+    <di-ct>hello </di-ct>
   </p>
   <div class="age">
     handlebars: {{ age }}

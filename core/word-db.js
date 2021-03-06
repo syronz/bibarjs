@@ -2,6 +2,9 @@ const wordsFeed = [
   { id: "hello", en: "Hello", ku: "salam" },
   { id: "bye", en: "Bye", ku: "xwa hafiz" },
   { id: "counter", en: 3, ku: "xwa hafiz" },
+  { id: "roles", en: "roles", ku: "rolakan" },
+  { id: "users", en: "users", ku: "bakarhenarakan" },
+  { id: "receipt vouchers", en: "receipt vouchers", ku: "para wargrtnakan" },
 ];
 
 function promiseReq(req) {
@@ -21,9 +24,7 @@ export class WordDB {
       console.log(e)
       if (e.oldVersion < 1) {
         wStore = db.createObjectStore('words', {keyPath: 'id'});
-      }
-
-      if (e.oldVersion > version ) {
+      } else {
         db.deleteObjectStore('words');
         wStore = db.createObjectStore('words', {keyPath: 'id'});
       }

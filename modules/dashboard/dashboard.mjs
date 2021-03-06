@@ -13,18 +13,30 @@ export default class User extends Init {
     console.log("hello");
   }
 
-
-
   async middleware() {
+
     const token = localStorage.getItem('token')
     if (token)  {
       await this.render()
       const outlet = document.getElementById("dashboardOutlet")
+
+      const btnMenu = document.querySelector('#menu')
+      btnMenu.addEventListener('click',(e) => {
+        console.log('..>>>>>', btnMenu);
+        const sideBar = document.querySelector('side-bar')
+        sideBar.toggle();
+        sideBar.setAttribute('status', 'close');
+        
+      })
+
       return [NEXT, outlet]
     }
     window.location.pathname = '/login' 
+  }
 
-    // return [STOP, null]
+
+  async start() {
+    console.log("this is start in dashboard");
   }
 
 }
