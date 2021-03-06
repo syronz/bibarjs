@@ -1,4 +1,21 @@
+@font-face {
+  font-family: "ir_sharp_m";
+  src: local("./fonts/sharp/ir_sharp_m.ttf") format("truetype"), /* Safari, Android, iOS */
+  local("./fonts/sharp/ir_sharp_m.woff") format("woff"); /* Modern Browsers */
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+
 body {
   padding: 0;
   margin: 0;
+  font-size: 0.8rem;
+  font-family: 'ir_sharp_m';
 }
+
+
+/* side-bar { */
+/*   border: 1px solid red; */
+/* } */

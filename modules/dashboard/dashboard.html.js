@@ -17,8 +17,9 @@ export const Html = html`
   </nav>
 
   <!-- <p route="/login"> ooo <div class="deleteThis"> go to login </div> </p> -->
+  <div> سڵاو </div>
   <div> <go-to route="/login"> go to login inside go-to </go-to> </div>
-  <side-bar status="open"></side-bar>
+  <side-bar status="open" width="9rem"></side-bar>
 
   <p> !!!! </p>
   <p> <di-ct>hello</di-ct> </p>

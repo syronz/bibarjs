@@ -1,10 +1,10 @@
 const wordsFeed = [
-  { id: "hello", en: "Hello", ku: "salam" },
-  { id: "bye", en: "Bye", ku: "xwa hafiz" },
-  { id: "counter", en: 3, ku: "xwa hafiz" },
-  { id: "roles", en: "roles", ku: "rolakan" },
-  { id: "users", en: "users", ku: "bakarhenarakan" },
-  { id: "receipt vouchers", en: "receipt vouchers", ku: "para wargrtnakan" },
+  { id: "hello", en: "Hello", ku: "سڵاو" },
+  { id: "bye", en: "Bye", ku: "خوا حافیز" },
+  { id: "counter", en: 3, ku: "ئەرکەکان" },
+  { id: "roles", en: "roles", ku: "ئەرکەکان" },
+  { id: "users", en: "users", ku: "بەکارهێنەرەکان" },
+  { id: "receipt vouchers", en: "receipt vouchers", ku: "پارە وەرگرتن" },
 ];
 
 function promiseReq(req) {

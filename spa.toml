@@ -2,3 +2,4 @@
 port = "3000"
 public_dir = "."
 index_file = "index.html"
+cache_control = 31536000
