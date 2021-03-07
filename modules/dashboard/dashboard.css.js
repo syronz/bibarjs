@@ -12,12 +12,14 @@ a {
 nav {
   height: 40px;
   padding: 0 10px 0 10px;
-  background: #2a386e;
-  color: #fff;
+  // background: #2a386e;
+  // color: #fff;
+  color: #72706b;
   display: grid;
   grid-template-columns: 40px 40px 80px 2fr 1fr 40px 40px 40px;
   align-items: center;
   justify-content: center;
+  border-bottom: 2px solid #f7f6f3;
   /* grid-gap: 8px; */
 }
 
@@ -26,45 +28,54 @@ nav button {
   padding: 0;
   margin: 0;
   background: none;
-  color: #fff;
+  color: #72706b;
   justify-self: stretch;
   font-size: 1.1em;
   border: none;
   height: 40px;
 }
 nav button:hover {
-  background: #47599f;
+  background-color: rgba(55,53,46,0.08);
+  cursor: pointer;
   filter: grayscale(0);
 }
 nav button:focus {
   outline: none;
 }
 
-
-
-nav .search-box {
-  margin-left: 8px;
-  margin-right: 8px;
-  color: #000;
-  padding-left: 5px;
-  background: #eee;
-  border-radius: 2px;
+.container {
   display: grid;
-  grid-template-columns: 22px 1fr;
-  grid-template-rows: 25px;
-  align-items: center;
+  grid-template-columns: auto 1fr;
+  grid-column-gap: 0.5rem;
+
 }
 
-nav .search-box input:focus{
-  outline: none;
-  background: #fff;
+side-bar {
+  height: calc(100vh - 40px - 2px);
+  scrollbar-width: thin;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
-nav .search-box input {
-  border: none;
-  background: #eee;
-  border-radius: 2px;
-  height: 25px;
-  padding: 0;
+side-bar::-webkit-scrollbar {
+  width: 4px;
 }
+
+/* Track */
+side-bar::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey; 
+}
+ 
+/* Handle */
+side-bar::-webkit-scrollbar-thumb {
+  background: #999; 
+}
+
+/* Handle on hover */
+side-bar::-webkit-scrollbar-thumb:hover {
+  background: #777; 
+}
+
+
+
 `;

@@ -21,7 +21,8 @@ class Dict extends HTMLElement {
     if ( r != undefined) {
       this.translatedTerm = r[window.LANG];
     } else {
-      this.pElem.style.backgroundColor = 'red';
+      // this.pElem.style.backgroundColor = 'red';
+      this.pElem.style.textDecoration = 'line-through';
     }
 
     if (!this.rendered) {
