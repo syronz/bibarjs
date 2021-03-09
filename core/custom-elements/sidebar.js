@@ -10,28 +10,28 @@ const navs = [
       { name: "about", resource: "all", route: "/dashboard/about/history/2016/sort", icon: 'groups' },
       { name: "dashboard", resource: "all", route: "/dashboard", icon: "dashboard" },
       { name: "about", resource: "all", route: "/dashboard/about/history/2016/sort", icon: 'groups' },
-      { name: "dashboard", resource: "all", route: "/dashboard", icon: "dashboard" },
-      { name: "about", resource: "all", route: "/dashboard/about/history/2016/sort", icon: 'groups' },
-      { name: "dashboard", resource: "all", route: "/dashboard", icon: "dashboard" },
-      { name: "about", resource: "all", route: "/dashboard/about/history/2016/sort", icon: 'groups' },
-      { name: "dashboard", resource: "all", route: "/dashboard", icon: "dashboard" },
-      { name: "about", resource: "all", route: "/dashboard/about/history/2016/sort", icon: 'groups' },
-      { name: "dashboard", resource: "all", route: "/dashboard", icon: "dashboard" },
-      { name: "about", resource: "all", route: "/dashboard/about/history/2016/sort", icon: 'groups' },
-      { name: "dashboard", resource: "all", route: "/dashboard", icon: "dashboard" },
-      { name: "about", resource: "all", route: "/dashboard/about/history/2016/sort", icon: 'groups' },
-      { name: "dashboard", resource: "all", route: "/dashboard", icon: "dashboard" },
-      { name: "about", resource: "all", route: "/dashboard/about/history/2016/sort", icon: 'groups' },
-      { name: "dashboard", resource: "all", route: "/dashboard", icon: "dashboard" },
-      { name: "about", resource: "all", route: "/dashboard/about/history/2016/sort", icon: 'groups' },
-      { name: "dashboard", resource: "all", route: "/dashboard", icon: "dashboard" },
-      { name: "about", resource: "all", route: "/dashboard/about/history/2016/sort", icon: 'groups' },
+      // { name: "dashboard", resource: "all", route: "/dashboard", icon: "dashboard" },
+      // { name: "about", resource: "all", route: "/dashboard/about/history/2016/sort", icon: 'groups' },
+      // { name: "dashboard", resource: "all", route: "/dashboard", icon: "dashboard" },
+      // { name: "about", resource: "all", route: "/dashboard/about/history/2016/sort", icon: 'groups' },
+      // { name: "dashboard", resource: "all", route: "/dashboard", icon: "dashboard" },
+      // { name: "about", resource: "all", route: "/dashboard/about/history/2016/sort", icon: 'groups' },
+      // { name: "dashboard", resource: "all", route: "/dashboard", icon: "dashboard" },
+      // { name: "about", resource: "all", route: "/dashboard/about/history/2016/sort", icon: 'groups' },
+      // { name: "dashboard", resource: "all", route: "/dashboard", icon: "dashboard" },
+      // { name: "about", resource: "all", route: "/dashboard/about/history/2016/sort", icon: 'groups' },
+      // { name: "dashboard", resource: "all", route: "/dashboard", icon: "dashboard" },
+      // { name: "about", resource: "all", route: "/dashboard/about/history/2016/sort", icon: 'groups' },
+      // { name: "dashboard", resource: "all", route: "/dashboard", icon: "dashboard" },
+      // { name: "about", resource: "all", route: "/dashboard/about/history/2016/sort", icon: 'groups' },
+      // { name: "dashboard", resource: "all", route: "/dashboard", icon: "dashboard" },
+      // { name: "about", resource: "all", route: "/dashboard/about/history/2016/sort", icon: 'groups' },
     ]
   },
   {
     scope: "settings",
     links: [
-      { name: "roles", resource: "role:read", route: "/settings/roles", icon: "nature_people" },
+      { name: "roles", resource: "role:read", route: "/dashboard/settings/roles", icon: "nature_people" },
       { name: "users", resource: "user:read", route: "/settings/users", icon: 'groups',
       },
     ]
@@ -122,7 +122,16 @@ class SideBar extends HTMLElement {
   }
 
   toggle() {
-    console.log('hello it is toggle in the sideBar');
+    const oldStatus = this.getAttribute("status");
+    const newStatus = oldStatus === "open" ? "close" : "open";
+    this.setAttribute("status", newStatus);
+  }
+
+  toggleExpansion() {
+    const oldStatus = this.getAttribute("expansion");
+    const newStatus = oldStatus === "thin" ? "thick" : "thin";
+    this.setAttribute("expansion", newStatus);
+    this.setAttribute("status", "open");
   }
 
 

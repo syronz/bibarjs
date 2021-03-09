@@ -1,10 +1,10 @@
-import Init from '../../core/init.js'
-import { Html } from './about.html.js'
-import { Css } from './about.css.js'
+import Init from '../../../core/init.js'
+import { Html } from './role.html.js'
+import { Css } from './role.css.js'
 
-export default class About extends Init {
+export default class Role extends Init {
   constructor(element) {
-    super(element, 'about', Html, Css)
+    super(element, 'role', Html, Css)
     this.data = {
       age: 88
     }
@@ -13,7 +13,7 @@ export default class About extends Init {
   }
 
   sayHello = _ => {
-    console.log("hello from about.mjs")
+    console.log("hello from role.mjs")
     this.data.age = 95;
     let oo = document.querySelector(".age");
     console.log(oo);
@@ -22,6 +22,7 @@ export default class About extends Init {
   }
 
   getUsers = async _ => {
+    console.log(".....................");
     const users = await fetch('https://jsonplaceholder.typicode.com/users')
       .then((res) => res.json())
     this.data.users = users
@@ -44,10 +45,4 @@ export default class About extends Init {
       this.render(this.data)
     })
   }
-
-  // async middleware() {
-  //   await this.render()
-  //   return [null, null]
-  // }
-
 }

@@ -1,5 +1,5 @@
 import Init from '../../core/init.js'
-import {NEXT, STOP} from '../../core/consts.js'
+import { NEXT, STOP } from '../../core/consts.js'
 import { Html } from './dashboard.html.js'
 import { Css } from './dashboard.css.js'
 
@@ -22,11 +22,13 @@ export default class User extends Init {
 
       const btnMenu = document.querySelector('#menu')
       btnMenu.addEventListener('click',(e) => {
-        console.log('..>>>>>', btnMenu);
         const sideBar = document.querySelector('side-bar')
         sideBar.toggle();
-        sideBar.setAttribute('status', 'close');
-        
+      })
+
+      btnMenu.addEventListener('dblclick',(e) => {
+        const sideBar = document.querySelector('side-bar')
+        sideBar.toggleExpansion();
       })
 
       return [NEXT, outlet]

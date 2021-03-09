@@ -10,8 +10,6 @@ class GoTo extends HTMLElement {
 
     const route = this.getAttribute("route") || '/route-attribute-is-missing';
 
-    console.log(route)
-
     const router = new Router(window.routes, window.baseHref)
     this.addEventListener('click', (x) => {
       x.preventDefault();

@@ -18,7 +18,8 @@ export const Html = html`
 
 
   <div class="container">
-    <side-bar status="open" width="1.7rem"></side-bar>
+    <!-- <side-bar status="open" width="1.7rem"></side-bar> -->
+    <side-bar status="open" expansion="thick" ></side-bar>
 
     <main role="main">
       <div id="dashboardOutlet">this is dashbord outlet </div>

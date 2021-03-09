@@ -12,15 +12,25 @@ a {
 nav {
   height: 40px;
   padding: 0 10px 0 10px;
-  // background: #2a386e;
-  // color: #fff;
   color: #72706b;
   display: grid;
   grid-template-columns: 40px 40px 80px 2fr 1fr 40px 40px 40px;
   align-items: center;
-  justify-content: center;
+  overflow: hidden;
+  // justify-content: center;
   border-bottom: 2px solid #f7f6f3;
-  /* grid-gap: 8px; */
+}
+
+side-bar[expansion="thick"] {
+  width: 9rem;
+}
+
+side-bar[expansion="thin"] {
+  width: 1.7rem;
+}
+
+side-bar[status="close"] {
+  width: 0;
 }
 
 nav button {
