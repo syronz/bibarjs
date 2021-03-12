@@ -5,6 +5,7 @@ import { WordDB } from "./core/word-db.js";
 import "./core/custom-elements/dict.js";
 import "./core/custom-elements/sidebar.js";
 import "./core/custom-elements/goto.js";
+import "./core/custom-elements/bitable.js";
 
 
 (async () => {

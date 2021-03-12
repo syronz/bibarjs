@@ -7,6 +7,10 @@
   font-display: swap;
 }
 
+h1 {
+  color: green;
+}
+
 
 body {
   padding: 0;

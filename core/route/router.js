@@ -131,7 +131,7 @@ export class Router {
     if (noRecord) {
       return
     }
-    window.history.pushState(null, null,  route)
+    // window.history.pushState(null, null,  route)
   }
 
 }
