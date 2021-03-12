@@ -4,8 +4,8 @@ export const Html = html`
 <div class="frame role">
   <div>
     <bi-table format='{
-      "url0":"https://jsonplaceholder.typicode.com/users",
       "url":"http://127.0.0.1:7173/api/restapi/v1/roles",
+      "page_sizes": [2, 10, 25, 50, 100, 500],
       "fields": {
         "ID": {
           "title": "#",

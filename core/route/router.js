@@ -79,7 +79,10 @@ export class Router {
   async navigate(fullUrl, noRecord = false) {
     // this.param = new Map()
     // this.query = new Map()
-    console.log(fullUrl);
+    console.log('------->', fullUrl, noRecord);
+    if (!noRecord) {
+      window.history.pushState(null, null,  fullUrl);
+    }
 
     const urlArr = fullUrl.split('?')
     const url = urlArr[0]
@@ -101,7 +104,6 @@ export class Router {
           this.data.param.set(params[i], mArr[k])
         }
 
-        // console.log("........>>>>>>>>>>>", this.data.param)
 
         if ( queryStr !== undefined ) {
           queryStr.split('&').map(x => {
@@ -117,7 +119,8 @@ export class Router {
           [flow, outlet] = await handler(outlet)
         }
 
-        this.location(fullUrl, noRecord)
+        // for having instance data in showing the tables we moved it to the above
+        // this.location(fullUrl, noRecord)
 
         return
       } // if
@@ -131,7 +134,7 @@ export class Router {
     if (noRecord) {
       return
     }
-    // window.history.pushState(null, null,  route)
+    window.history.pushState(null, null,  route)
   }
 
 }

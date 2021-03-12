@@ -1,13 +1,17 @@
+import {Router} from '../route/router.js';
+
 class BiTable extends HTMLElement {
   constructor() {
     super();
 
     const url = new URL(location);
     this.query = url.search;
-    console.log('constructor: ', location.search);
 
     this.pageSize = url.searchParams.get('page_size') ?? 10;
     this.page = url.searchParams.get('page') ?? 0;
+    this.page = parseInt(this.page, 10);
+
+    console.log('constructor: ', location.search, this.pageSize, this.page);
 
     // const shadowRoot = this.attachShadow({mode: 'open'});
     this.attachShadow({mode: 'open'});
@@ -24,7 +28,6 @@ class BiTable extends HTMLElement {
   async connectedCallback() {
     const token = localStorage.getItem('token');
 
-    console.log('connectedCallback: ', location.search);
     const result = await fetch(this.format.url + this.query, {
       headers: {
         "authorization":`Bearer ${token}`
@@ -41,7 +44,19 @@ class BiTable extends HTMLElement {
     this.render(data);
   }
 
+  goto() {
+    console.log(this.page, location);
+    const router = new Router(window.routes, window.baseHref)
+    router.navigate(`${location.pathname}?page_size=${this.pageSize}&page=${this.page}`);
+
+  }
+
   render(data) {
+
+    console.log(this.count,this.page, this.pageSize);
+    const nextDisabled = this.page >= Math.floor(this.count/this.pageSize)? 'disabled':'';
+    const preDisabled = this.page <= 0? 'disabled': '';
+
     const content = document.createElement('div');
      content.innerHTML = `
       <style> p { color: green;}</style>
@@ -56,46 +71,60 @@ class BiTable extends HTMLElement {
         `).join('')}
       </table>
 
-      <button id="navigateT"> just navigate </button>
-
-      <go-to route="/dashboard/settings/roles?page_size=2&page=1">
-        <button> page 1 </button>
-      </go-to>
-      <go-to route="/dashboard/settings/roles?page_size=2&page=2">
-        <button> page 2 </button>
-      </go-to>
+      <select id="page_size">
+        ${this.format.page_sizes.map(x => {
+          const selected = this.pageSize == x?'selected':'';
+         return `<option ${selected}>${x}</option>`
+        }).join('')}
+      </select>
+      <button id="first" ${preDisabled}> << </button>
+      <button id="pre" ${preDisabled}> < </button>
+      <button> ${this.page} </button>
+      <button id="next" ${nextDisabled}> > </button>
+      <button id="last" ${nextDisabled}> >> </button>
 
       
     `;
 
-    const btn = document.createElement('button');
-    btn.textContent = 'click me';
-    btn.addEventListener('click',() => {
-      console.log(location.pathname);
-      // window.location = 'http://erp14.com';
-      window.location = 'http://localhost:3000/dashboard/settings/roles?page_size=2&page=1';
-      // router.navigate(window.location.pathname+)
-    });
     
 
     this.shadowRoot.appendChild(content);
-    this.shadowRoot.appendChild(btn);
-    // const btn = document.querySelector("table");
-    /*
-    const btn = document.querySelector('#getUsers')
-    btn.addEventListener('click',async (e) => {
-      const users = await fetch('https://jsonplaceholder.typicode.com/users')
-        .then((res) => res.json())
-      this.data.users = users
 
-      this.render(this.data)
+
+    const next = this.shadowRoot.querySelector('#next');
+    next.addEventListener('click', () => {
+      this.page++;
+      this.goto();
+    });
+
+    const pre = this.shadowRoot.querySelector('#pre');
+    pre.addEventListener('click', () => {
+      this.page--;
+      this.goto();
+    });
+
+    const first = this.shadowRoot.querySelector('#first');
+    first.addEventListener('click', () => {
+      this.page = 0;
+      this.goto();
+    });
+
+    const last = this.shadowRoot.querySelector('#last');
+    last.addEventListener('click', () => {
+      this.page = Math.floor(this.count / this.pageSize);
+      this.goto();
+    });
+
+    const pageSize = this.shadowRoot.querySelector('#page_size');
+    pageSize.addEventListener('change', (e) => {
+      this.pageSize = parseInt(e.target.value, 10);
+      this.page = 0;
+      this.goto();
     })
-    */
 
   }
 
   async disconnectedCallback() {
-    await console.log('disconnectedCallback: ', location.search);
     // browser calls this method when the element is removed from the document
     // (can be called many times if an element is repeatedly added/removed)
   }

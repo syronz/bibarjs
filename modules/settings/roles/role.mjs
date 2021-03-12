@@ -36,7 +36,6 @@ export default class Role extends Init {
   }
 
   async start() {
-    console.log('role.mjs start: ', location.search);
     const btn = document.querySelector('#getUsers')
     btn.addEventListener('click',async (e) => {
       const users = await fetch('https://jsonplaceholder.typicode.com/users')
