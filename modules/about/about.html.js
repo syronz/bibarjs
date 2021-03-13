@@ -13,9 +13,6 @@ export const Html = html`
   <button pOnclick="deleteUsers()" > delete users </button>
   <button pOnclick="sayHello()" > hello </button>
   <div>
-    <lit-table myString="ok"></lit-table>
-    <wc-lit-html></wc-lit-html>
-    <bib-table></bib-table>
     <!-- <ul class="pople_list"> -->
     {{#each users}}
     <!-- <li>{{this.name}}</li> -->

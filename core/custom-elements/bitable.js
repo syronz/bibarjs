@@ -11,11 +11,14 @@ class BiTable extends HTMLElement {
     this.page = url.searchParams.get('page') ?? 0;
     this.page = parseInt(this.page, 10);
 
-    console.log('constructor: ', location.search, this.pageSize, this.page);
 
     // const shadowRoot = this.attachShadow({mode: 'open'});
     this.attachShadow({mode: 'open'});
     this.format = JSON.parse(this.getAttribute('format'));
+
+    this.orderBy = url.searchParams.get('order_by') ?? this.format.order_by;
+    this.direction = url.searchParams.get('direction') ?? this.format.direction;
+    console.log('order: ', this.orderBy, this.direction);
 
     this.cols = [];
     for (const el in this.format.fields) {
@@ -45,10 +48,30 @@ class BiTable extends HTMLElement {
   }
 
   goto() {
-    console.log(this.page, location);
     const router = new Router(window.routes, window.baseHref)
-    router.navigate(`${location.pathname}?page_size=${this.pageSize}&page=${this.page}`);
 
+    const query = `page_size=${this.pageSize}&page=${this.page}&order_by=${this.orderBy}&direction=${this.direction}`;
+    router.navigate(`${location.pathname}?${query}`);
+  }
+
+  sort(field) {
+    if (this.format.fields[field].sort !== true) {
+      return;
+    }
+
+    if (field.toLowerCase() == this.orderBy.toLowerCase()) {
+      this.direction = this.direction === 'asc' ? 'desc' : 'asc';
+    } else {
+      this.orderBy = field.toLowerCase();
+      this.direction = 'asc';
+    }
+    this.page = 0;
+
+    this.goto();
+
+
+
+    // console.log("i'm sort", field, this.orderBy, this.direction);
   }
 
   render(data) {
@@ -59,10 +82,50 @@ class BiTable extends HTMLElement {
 
     const content = document.createElement('div');
      content.innerHTML = `
-      <style> p { color: green;}</style>
+      <style> 
+        p { color: green;}
+
+        table th div {
+          display: flex;
+          justify-content: space-between;
+        }
+
+        .sortable {
+          cursor: pointer;
+        }
+
+        .sorted {
+          cursor: pointer;
+        }
+
+        .sorted .thin {
+          color: #555;
+        }
+
+        .thin {
+          font-weight: 100;
+          color: #CCC;
+        }
+
+      </style>
       <table border=1 cellspacing=0>
         <tr>
-          ${this.cols.map(x => `<th>${this.format.fields[x].title}</th>`).join('')}
+          ${this.cols.map(x => {
+            let sortable = this.format.fields[x].sort ? 'sortable' : '';
+            let sortIcon = this.format.fields[x].sort ? '⇅' : '';
+
+            console.log(x, this.orderBy);
+            if (x.toLowerCase() == this.orderBy.toLowerCase()) {
+              sortIcon = this.direction === 'asc' ? '↧' : '↥';
+              sortable = 'sorted';
+            }
+            return `<th onclick="biTable.sort('${x}')" class="${sortable}">
+              <div>
+                <span>${this.format.fields[x].title}</span>
+                <span class="thin">${sortIcon}</span>
+              </div>
+            </th>`;
+          }).join('')}
         </tr>
         ${data.map(x => `
           <tr>
