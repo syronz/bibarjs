@@ -5,6 +5,8 @@ export const Html = html`
   <div>
     <bi-table id="biTable" format='{
       "url":"http://127.0.0.1:7173/api/restapi/v1/roles",
+      "edit": true,
+      "key": "ID",
       "page_sizes": [2, 10, 25, 50, 100, 500],
       "order_by": "id",
       "direction": "desc",
@@ -17,17 +19,22 @@ export const Html = html`
         "name": {
           "title": "Name",
           "list": true,
-          "sort": true
+          "sort": true,
+          "edit": true,
+          "type": "text"
         },
         "resources": {
           "title": "Resources",
           "list": true,
-          "sort": false
+          "sort": false,
+          "edit": true
         },
         "description": {
           "title": "Description",
           "list": true,
-          "sort": true
+          "sort": true,
+          "edit": true,
+          "type": "number"
         }
       }
     }'></bi-table>
@@ -38,6 +45,7 @@ export const Html = html`
   </p>
   <div class="age">
     handlebars: {{ age }}
+    t
   </div>
   <button id="getUsers"> get users </button>
   <button pOnclick="deleteUsers()" > delete users </button>

@@ -11,14 +11,14 @@ class BiTable extends HTMLElement {
     this.page = url.searchParams.get('page') ?? 0;
     this.page = parseInt(this.page, 10);
 
-
     // const shadowRoot = this.attachShadow({mode: 'open'});
     this.attachShadow({mode: 'open'});
-    this.format = JSON.parse(this.getAttribute('format'));
+    this.rawFormat = this.getAttribute('format');
+    
+    this.format = JSON.parse(this.rawFormat);
 
     this.orderBy = url.searchParams.get('order_by') ?? this.format.order_by;
     this.direction = url.searchParams.get('direction') ?? this.format.direction;
-    console.log('order: ', this.orderBy, this.direction);
 
     this.cols = [];
     for (const el in this.format.fields) {
@@ -38,9 +38,6 @@ class BiTable extends HTMLElement {
     }).then((res) => res.json())
 
     this.count = result.data.count ?? 1000;
-
-
-
 
     const data = result.data.list;
 
@@ -69,19 +66,16 @@ class BiTable extends HTMLElement {
 
     this.goto();
 
-
-
     // console.log("i'm sort", field, this.orderBy, this.direction);
   }
 
   render(data) {
 
-    console.log(this.count,this.page, this.pageSize);
     const nextDisabled = this.page >= Math.floor(this.count/this.pageSize)? 'disabled':'';
     const preDisabled = this.page <= 0? 'disabled': '';
 
     const content = document.createElement('div');
-     content.innerHTML = `
+    content.innerHTML = `
       <style> 
         p { color: green;}
 
@@ -107,14 +101,21 @@ class BiTable extends HTMLElement {
           color: #CCC;
         }
 
+        .action-btn {
+          cursor: pointer;
+          font-size: 1.5rem;
+        }
+
       </style>
+
+      ${this.format.edit === true ? `<bi-form format='${this.rawFormat}' id="editForm" type="edit" tableid="28"></bi-form>`: `<div> +++++++ </div>`}
+
       <table border=1 cellspacing=0>
         <tr>
           ${this.cols.map(x => {
             let sortable = this.format.fields[x].sort ? 'sortable' : '';
             let sortIcon = this.format.fields[x].sort ? '⇅' : '';
 
-            console.log(x, this.orderBy);
             if (x.toLowerCase() == this.orderBy.toLowerCase()) {
               sortIcon = this.direction === 'asc' ? '↧' : '↥';
               sortable = 'sorted';
@@ -130,6 +131,11 @@ class BiTable extends HTMLElement {
         ${data.map(x => `
           <tr>
             ${this.cols.map(y => `<td>${eval(`x.${y}`)}</td>`).join('')}
+
+            ${this.format.edit === true ? 
+                `<td class="action-btn" onclick="biTable.edit(${x[this.format.key]})">
+                  &#9998;
+                </td>` : '' }
           </tr>
         `).join('')}
       </table>
@@ -137,7 +143,7 @@ class BiTable extends HTMLElement {
       <select id="page_size">
         ${this.format.page_sizes.map(x => {
           const selected = this.pageSize == x?'selected':'';
-         return `<option ${selected}>${x}</option>`
+          return `<option ${selected}>${x}</option>`
         }).join('')}
       </select>
       <button id="first" ${preDisabled}> << </button>
@@ -146,10 +152,10 @@ class BiTable extends HTMLElement {
       <button id="next" ${nextDisabled}> > </button>
       <button id="last" ${nextDisabled}> >> </button>
 
-      
+
     `;
 
-    
+
 
     this.shadowRoot.appendChild(content);
 
@@ -183,8 +189,15 @@ class BiTable extends HTMLElement {
       this.pageSize = parseInt(e.target.value, 10);
       this.page = 0;
       this.goto();
-    })
+    });
 
+
+  }
+
+  edit(id) {
+    console.log('I am edit', id);
+    const editForm = this.shadowRoot.querySelector('#editForm');
+    editForm.setAttribute('tableid', id);
   }
 
   async disconnectedCallback() {
