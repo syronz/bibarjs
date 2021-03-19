@@ -8,7 +8,7 @@ class GoTo extends HTMLElement {
     // add pointer style to all routes
     this.style.cursor = "pointer";
 
-    const route = this.getAttribute("route") || '/route-attribute-is-missing';
+    const route = this.getAttribute("route") ?? '/route-attribute-is-missing';
 
     const router = new Router(window.routes, window.baseHref)
     this.addEventListener('click', (x) => {

@@ -73,7 +73,19 @@ class BiForm extends HTMLElement {
         }
       </style>
 
+
       <div id="bi-form-container">
+
+      <alert-bar 
+        level="danger"
+        code="E1088822"
+        domain="base"
+        message="to zor halay"
+        original_error="token is required"
+        title="daxl naboo"
+        type="http://127.0.0.1:7173/api/restapi/v1/public/errors/ku.html#UNAUTHORIZED"
+      ></alert-bar>
+
       ${this.cols.map(x => {
         return `
           <div>

@@ -5,6 +5,11 @@ const wordsFeed = [
   { id: "roles", en: "roles", ku: "ئەرکەکان" },
   { id: "users", en: "users", ku: "بەکارهێنەرەکان" },
   { id: "receipt vouchers", en: "receipt vouchers", ku: "پارە وەرگرتن" },
+  { id: "code", en: "code", ku: "کۆد" },
+  { id: "domain", en: "domain", ku: "دۆمەین" },
+  { id: "message", en: "message", ku: "پەیام" },
+  { id: "original error", en: "original error", ku: "هەڵەی بنەڕەتی" },
+  { id: "path", en: "path", ku: "ڕێڕەو" },
 ];
 
 function promiseReq(req) {

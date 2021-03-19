@@ -7,6 +7,8 @@ import "./core/custom-elements/sidebar.js";
 import "./core/custom-elements/goto.js";
 import "./core/custom-elements/bitable.js";
 import "./core/custom-elements/biform.js";
+import "./core/custom-elements/snackbar.js";
+import "./core/custom-elements/alertbar.js";
 
 
 (async () => {
