@@ -2,6 +2,10 @@ class AlertBar extends HTMLElement {
   constructor() {
     super();
 
+    this.attachShadow({mode: 'open'});
+  }
+
+  render() {
     const container = document.createElement('div');
     const level = this.getAttribute('level');
     const code = this.getAttribute('code');
@@ -10,11 +14,12 @@ class AlertBar extends HTMLElement {
     const original_error = this.getAttribute('original_error');
     const title = this.getAttribute('title');
     const type = this.getAttribute('type');
-
+    const display = this.getAttribute('display');
 
     container.innerHTML = `
       <style>
         .container {
+          display: ${display};
           position: relative;
           padding: .5rem 1rem;
           margin-bottom: 1rem;
@@ -27,30 +32,66 @@ class AlertBar extends HTMLElement {
           border-color: #f5c6cb;
         }
 
-        code {
-          display: block;
+        .container {
+          // margin: 0.4rem;
         }
+
+        #closeBtn {
+          background-color: transparent;
+          border: none;
+          cursor: pointer;
+          margin-top: .5rem;
+        }
+
+        #closeBtn:focus {
+          border: none;
+          outline: none;
+        }
+
+        summary {
+          display: flex;
+          justify-content: space-between;
+          align-items: start;
+        }
+
       </style>
 
       <div class="container ${level}">
         <details>
-          <summary>${title} - ${message}</summary>
-          <code><di-ct>code</di-ct>: ${code}</code>
-          <code><di-ct>domain</di-ct>: ${domain}</code>
-          <code><di-ct>original error</di-ct>: ${original_error}</code>
-          <code><di-ct>detail</di-ct>: <a href="${type}" target="_blank">${type.split('#')[1]}</a></code>
-          <p>Epcot is a theme park at Walt Disney World Resort featuring exciting attractions, international pavilions, award-winning fireworks and seasonal special events.</p>
+          <summary>
+            <h3>${title} - ${message}</h3>
+            <button id="closeBtn">Ⅹ</button>
+          </summary>
+          <div><di-ct>code</di-ct>: <code>${code}</code></div>
+          <div><di-ct>domain</di-ct>: <code>${domain}</code></div>
+          <div><di-ct>original error</di-ct>: <code>${original_error}</code></div>
+          <div><di-ct>detail</di-ct>: <a href="${type}" target="_blank">${type.split('#')[1]}</a></div>
         </details>
+
 
 
       </div>
     `;
 
-    const shadowRoot = this.attachShadow({mode: 'open'});
-    shadowRoot.appendChild(container);
+    this.shadowRoot.innerHTML = container.innerHTML;
 
+    const closeBtn = this.shadowRoot.querySelector("#closeBtn");
+    closeBtn.addEventListener('click', () => {
+      this.close();
+    });
 
+  }
 
+  static get observedAttributes() {
+    return ['display', 'message'];
+  }
+
+  attributeChangedCallback(name, oldValue, newValue) {
+    this.render();
+  }
+
+  close() {
+    this.setAttribute('display', 'none');
   }
 }
 

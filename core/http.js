@@ -25,9 +25,6 @@ async function fetchAsync( method, url, body ) {
   const result = await response.json()
   if (!response.ok) throw result;
   return result;
-  // } catch(e) {
-  //   console.warn(e)
-  // }
 }
 
 export function post(url, body) {
@@ -38,4 +35,39 @@ export function post(url, body) {
 
 export function get(url) {
   return fetchAsync('GET', url);
+}
+
+
+export class Ajax {
+
+  post(url = '', data = {}) {
+    this.response = fetch(url, {
+      method: 'put',
+      headers: {
+        'authorization2':`Bearer ${this.token}`,
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data),
+    }).then(res => {
+      if (res.status > 299) {
+        this.hasError = true;
+      }
+      return res.json()
+    })
+      .catch(err => { console.warn("error in post", err); return err; });
+
+    return this;
+  }
+
+  subscribe(l,m) {
+    Promise.race([this.response]).then(x => {
+      if (this.hasError) {
+        m(x);
+      } else {
+        l(x);
+      }
+    }).catch(m);
+  }
+
 }

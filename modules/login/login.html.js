@@ -4,9 +4,9 @@ export const Html = html`
 <div class="login-container">
   <div></div>
   {{#if error }}
-    <div class="logo error-logo">Ω</div>
+    <div class="logo error-logo"></div>
   {{else}}
-    <div class="logo">Ω</div>
+    <div class="logo"></div>
   {{/if}}
   <div class="box">
     <p>
@@ -32,11 +32,21 @@ export const Html = html`
           id="password">
     </div>
     <div class="footer">
-    <span> 
-      {{#if error}}
-        {{ error }}
-      {{/if}}
-    </span>
+      <alert-bar 
+        display="block"
+        level="danger"
+        code="E1088822"
+        domain="base"
+        message="to zor halay"
+        original_error="token is required"
+        title="daxl naboo"
+        type="http://127.0.0.1:7173/api/restapi/v1/public/errors/ku.html#UNAUTHORIZED"
+      ></alert-bar>
+    <!-- <span> --> 
+    <!--   {{#if error}} -->
+    <!--     {{ error }} -->
+    <!--   {{/if}} -->
+    <!-- </span> -->
       <button id="btnLogin" >Login</button>
     </div>
   </div>

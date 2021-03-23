@@ -74,7 +74,7 @@ h2 {
 .login-container > .box .footer{
   grid-column: 2;
   display: grid;
-  grid-template-columns: 5fr 2fr;
+  grid-template-columns: 1fr;
   align-items: center;
 }
 

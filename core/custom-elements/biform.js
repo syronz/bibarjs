@@ -1,4 +1,5 @@
 import {Router} from '../route/router.js';
+import {Ajax} from '../../core/http.js';
 
 class BiForm extends HTMLElement {
   constructor() {
@@ -77,6 +78,7 @@ class BiForm extends HTMLElement {
       <div id="bi-form-container">
 
       <alert-bar 
+        display="none"
         level="danger"
         code="E1088822"
         domain="base"
@@ -85,6 +87,7 @@ class BiForm extends HTMLElement {
         title="daxl naboo"
         type="http://127.0.0.1:7173/api/restapi/v1/public/errors/ku.html#UNAUTHORIZED"
       ></alert-bar>
+
 
       ${this.cols.map(x => {
         return `
@@ -128,52 +131,27 @@ class BiForm extends HTMLElement {
         // let result = null
         const ajax = new Ajax();
           ajax.post(`${this.format.url}/${this.tableID}`, this.elementData)
-          .subscribe(x => console.log('res ', x), err => console.warn('err ', err));
+          .subscribe(x => {
+            console.log('res ', x)
+          }, 
+          err => {
+            console.warn('err ', err, err.error.code)
+            const alert = this.shadowRoot.querySelector('alert-bar');
+            alert.setAttribute('display', 'block');
+            alert.setAttribute('level', 'danger');
+            alert.setAttribute('code', err.error.code);
+            alert.setAttribute('domain', err.error.domain);
+            alert.setAttribute('message', err.error.message);
+            alert.setAttribute('original_error', err.error.original_error);
+            alert.setAttribute('title', err.error.title);
+            alert.setAttribute('type', err.error.type);
+          });
 
         break;
       default:
         console.warn(this.type, 'not accepted');
     }
   }
-
-
-
-
-
 }
 
 customElements.define('bi-form', BiForm);
-
-class Ajax {
-
-  post(url = '', data = {}) {
-    this.response = fetch(url, {
-      method: 'put',
-      headers: {
-        'authorization2':`Bearer ${this.token}`,
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data),
-    }).then(res => {
-      if (res.status > 299) {
-        this.hasError = true;
-      }
-      return res.json()
-    })
-      .catch(err => { console.warn("error in post", err); return err; });
-
-    return this;
-  }
-
-  subscribe(l,m) {
-    Promise.race([this.response]).then(x => {
-      if (this.hasError) {
-        m(x);
-      } else {
-        l(x);
-      }
-    }).catch(m);
-  }
-
-}
