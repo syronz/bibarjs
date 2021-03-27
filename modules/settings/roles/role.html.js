@@ -4,7 +4,7 @@ export const Html = html`
 <div class="frame role">
   <div>
     <bi-table id="biTable" format='{
-      "url":"http://127.0.0.1:7173/api/restapi/v1/roles",
+      "url":"roles",
       "edit": true,
       "key": "ID",
       "page_sizes": [2, 10, 25, 50, 100, 500],

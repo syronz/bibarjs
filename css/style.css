@@ -19,14 +19,6 @@ body {
   font-family: 'ir_sharp_m';
 }
 
-snack-bar {
-  position: fixed;
-  right: 0;
-  background-color: yellow;
-  top: 3rem;
-  padding: 0 10px;
-  display: none;
-}
 
 
 /* side-bar { */

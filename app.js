@@ -16,6 +16,13 @@ import "./core/custom-elements/alertbar.js";
     let wordDB = new WordDB()
     await wordDB.open(DBVERSION)
     await wordDB.inc()
+
+
+    // load snack-bar
+    const snackBar = document.querySelector('snack-bar');
+    window.SnackBar = snackBar;
+
+
     // let r = await wordDB.get('hello');
     // console.log(r);
   } catch(err) {

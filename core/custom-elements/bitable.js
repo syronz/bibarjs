@@ -1,4 +1,5 @@
 import {Router} from '../route/router.js';
+import {Ajax} from '../../core/http.js';
 
 class BiTable extends HTMLElement {
   constructor() {
@@ -28,20 +29,33 @@ class BiTable extends HTMLElement {
     }
   }
 
-  async connectedCallback() {
-    const token = localStorage.getItem('token');
+  connectedCallback() {
+    console.log('inside bi-table', this.format.url);
+    const ajax = new Ajax();
+    ajax.get(this.format.url + this.query)
+        .subscribe(
+          res => {
+            console.log('res', res);
+            this.count = res.data.count ?? 1000;
+            const data = res.data.list;
+            this.render(data);
+          },
+          err => {
+            console.warn('err', err);
+          }
+        );
+    // const token = localStorage.getItem('token');
 
-    const result = await fetch(this.format.url + this.query, {
-      headers: {
-        "authorization":`Bearer ${token}`
-      }
-    }).then((res) => res.json())
+    // const result = await fetch(this.format.url + this.query, {
+    //   headers: {
+    //     "authorization":`Bearer ${token}`
+    //   }
+    // }).then((res) => res.json())
 
-    this.count = result.data.count ?? 1000;
+    // this.count = result.data.count ?? 1000;
 
-    const data = result.data.list;
+    // const data = result.data.list;
 
-    this.render(data);
   }
 
   goto() {
@@ -108,7 +122,14 @@ class BiTable extends HTMLElement {
 
       </style>
 
-      ${this.format.edit === true ? `<bi-form format='${this.rawFormat}' id="editForm" type="edit" tableid="28"></bi-form>`: `<div> +++++++ </div>`}
+      ${this.format.edit === true ?
+      `<bi-form
+        format='${this.rawFormat}'
+        id="editForm"
+        type="edit"
+        tableid="28">
+      </bi-form>`:
+      `<div> +++++++ </div>`}
 
       <table border=1 cellspacing=0>
         <tr>

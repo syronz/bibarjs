@@ -44,8 +44,11 @@ class AlertBar extends HTMLElement {
         #closeBtn {
           background-color: transparent;
           border: none;
+          color: #777;
           cursor: pointer;
-          margin-top: .5rem;
+          position: absolute;
+          top: 0;
+          right: 5px;
         }
 
         #closeBtn:focus {
@@ -53,18 +56,12 @@ class AlertBar extends HTMLElement {
           outline: none;
         }
 
-        summary {
-          display: flex;
-          justify-content: space-between;
-          align-items: start;
-        }
-
       </style>
 
       <div class="container ${level}">
         <details>
           <summary>
-            <h4>${message}</h4>
+            <span>${message}</span>
             <button id="closeBtn">Ⅹ</button>
           </summary>
           <div><di-ct>title</di-ct>: <code>${title}</code></div>

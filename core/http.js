@@ -8,6 +8,7 @@ export function css(str) {
   return str
 }
 
+/*
 async function fetchAsync( method, url, body ) {
   // try {
   const access_token = 22
@@ -19,7 +20,6 @@ async function fetchAsync( method, url, body ) {
     body: body && JSON.stringify(body)
   })
   // if (response.status === 401) {
-  //   /* setToken(sjdkbhnull); */
   //   throw new Error('401')
   // }
   const result = await response.json()
@@ -28,7 +28,6 @@ async function fetchAsync( method, url, body ) {
 }
 
 export function post(url, body) {
-
   console.log("this is post", window.baseHref)
   return fetchAsync('POST', url, body);
 }
@@ -36,9 +35,13 @@ export function post(url, body) {
 export function get(url) {
   return fetchAsync('GET', url);
 }
+*/
 
 
 export class Ajax {
+  constructor() {
+    this.token = localStorage.getItem('token');
+  }
 
   fetch(method, url, body) {
     this.response = fetch(`${API_URL}${url}`, {
@@ -61,6 +64,16 @@ export class Ajax {
 
   post(url = '', data = {}) {
     this.fetch('post', url, data);
+    return this;
+  }
+
+  put(url = '', data = {}) {
+    this.fetch('put', url, data);
+    return this;
+  }
+
+  get(url = '') {
+    this.fetch('get', url);
     return this;
   }
 
