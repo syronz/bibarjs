@@ -13,32 +13,44 @@ h2 {
 .login-container {
   display: grid;
   height: 100vh;
+  padding-top: 3rem;
   /* background: #2a386e; */
   background-image: radial-gradient(circle, #051937, #0d2144, #162852, #203060, #2a386e);
-  grid-template-rows: 15% 100px 200px auto;
   justify-items: center;
+  align-items: start;
 }
 
 .login-container > .box {
-  /* justify-items: center; */
   grid-template-columns: 1fr 12fr 1fr;
-  grid-template-rows: 50px auto auto;
   align-items: center;
 
   display: grid;
+  grid-gap: 1rem;
   color: white;
   font-family: arial;
-  min-width: 375px;
+  width: 375px;
+  max-width: 95% !important;
 
   border-radius: 5px;
-  box-shadow:         inset 0 0 5px rgba(255,255,255,0.5);
+  box-shadow: inset 0 0 5px rgba(255,255,255,0.5);
   background: linear-gradient(0deg, 
   rgba(255,255,255,0.4) -30%, 
   rgba(0,0,0,0) 30%, 
   rgba(203,246,255,0) 70%, 
   rgba(255,255,255,0.4) 130%);
   filter: progid:DXImageTransform.Microsoft.Blur(PixelRadius=3,MakeShadow=true,ShadowOpacity=0.30);
+  overflow: auto;
+  padding-bottom: 1rem;
 
+}
+
+@media only screen and (max-width: 400px) {
+  .login-container > .box {
+    width: 95%;
+  }
+}
+
+alert-bar {
 }
 
 .login-container > .logo {

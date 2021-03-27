@@ -2,12 +2,6 @@ import { html } from '../../core/http.js'
 
 export const Html = html`
 <div class="login-container">
-  <div></div>
-  {{#if error }}
-    <div class="logo error-logo"></div>
-  {{else}}
-    <div class="logo"></div>
-  {{/if}}
   <div class="box">
     <p>
       Sing In
@@ -32,24 +26,13 @@ export const Html = html`
           id="password">
     </div>
     <div class="footer">
-      <alert-bar 
-        display="block"
+      <alert-bar
+        id="alertBar"
+        display="none"
         level="danger"
-        code="E1088822"
-        domain="base"
-        message="to zor halay"
-        original_error="token is required"
-        title="daxl naboo"
-        type="http://127.0.0.1:7173/api/restapi/v1/public/errors/ku.html#UNAUTHORIZED"
       ></alert-bar>
-    <!-- <span> --> 
-    <!--   {{#if error}} -->
-    <!--     {{ error }} -->
-    <!--   {{/if}} -->
-    <!-- </span> -->
       <button id="btnLogin" >Login</button>
     </div>
   </div>
-  <div></div>
 </div>
 `;

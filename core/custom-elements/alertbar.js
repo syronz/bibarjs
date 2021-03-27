@@ -16,6 +16,11 @@ class AlertBar extends HTMLElement {
     const type = this.getAttribute('type');
     const display = this.getAttribute('display');
 
+    if (display === 'none') {
+      this.shadowRoot.innerHTML = '';
+      return;
+    }
+
     container.innerHTML = `
       <style>
         .container {
@@ -59,9 +64,10 @@ class AlertBar extends HTMLElement {
       <div class="container ${level}">
         <details>
           <summary>
-            <h3>${title} - ${message}</h3>
+            <h4>${message}</h4>
             <button id="closeBtn">Ⅹ</button>
           </summary>
+          <div><di-ct>title</di-ct>: <code>${title}</code></div>
           <div><di-ct>code</di-ct>: <code>${code}</code></div>
           <div><di-ct>domain</di-ct>: <code>${domain}</code></div>
           <div><di-ct>original error</di-ct>: <code>${original_error}</code></div>
@@ -92,6 +98,18 @@ class AlertBar extends HTMLElement {
 
   close() {
     this.setAttribute('display', 'none');
+  }
+
+  apply(err) {
+    this.setAttribute('code', err.code);
+    this.setAttribute('type', err.type);
+    this.setAttribute('title', err.title);
+    this.setAttribute('domain', err.domain);
+    this.setAttribute('base', err.base);
+    this.setAttribute('original_error', err.original_error);
+    this.setAttribute('path', err.path);
+    this.setAttribute('message', err.message);
+    this.setAttribute('display', 'block');
   }
 }
 

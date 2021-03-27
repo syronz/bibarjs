@@ -40,15 +40,15 @@ export function get(url) {
 
 export class Ajax {
 
-  post(url = '', data = {}) {
-    this.response = fetch(url, {
-      method: 'put',
+  fetch(method, url, body) {
+    this.response = fetch(`${API_URL}${url}`, {
+      method: method,
       headers: {
-        'authorization2':`Bearer ${this.token}`,
+        'authorization':`Bearer ${this.token}`,
         'Accept': 'application/json',
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json; charset=utf-8'
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify(body),
     }).then(res => {
       if (res.status > 299) {
         this.hasError = true;
@@ -57,17 +57,21 @@ export class Ajax {
     })
       .catch(err => { console.warn("error in post", err); return err; });
 
+  }
+
+  post(url = '', data = {}) {
+    this.fetch('post', url, data);
     return this;
   }
 
-  subscribe(l,m) {
+  subscribe(success,failed) {
     Promise.race([this.response]).then(x => {
       if (this.hasError) {
-        m(x);
+        failed(x);
       } else {
-        l(x);
+        success(x);
       }
-    }).catch(m);
+    }).catch(failed);
   }
 
 }
