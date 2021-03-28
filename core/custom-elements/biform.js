@@ -10,11 +10,13 @@ class BiForm extends HTMLElement {
       display: 'none'
     };
 
-    this.display = 'block';
+    this.display = this.getAttribute('display');
+    this.position = 'fixed';
     this.rawFormat = this.getAttribute('format');
     this.type = this.getAttribute('type');
     this.tableID = this.getAttribute('tableid');
     this.format = JSON.parse(this.rawFormat);
+
 
     this.cols = [];
     for (const el in this.format.fields) {
@@ -22,7 +24,6 @@ class BiForm extends HTMLElement {
         this.cols.push(el);
       }
     }
-
   }
 
   fetchData() {
@@ -47,23 +48,6 @@ class BiForm extends HTMLElement {
             this.render();
           }
         );
-
-    /*
-      this.token = localStorage.getItem('token');
-
-      const result = await fetch(`${this.format.url}/${this.tableID}`, {
-      headers: {
-      "authorization":`Bearer ${this.token}`
-      }
-      }).then((res) => res.json());
-
-      this.elementData = result.data;
-
-      this.cols.map(x => {
-      this.format.fields[x].value = result.data[x];
-      });
-      this.render();
-    */
   }
 
   connectedCallback() {
@@ -71,67 +55,128 @@ class BiForm extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ['tableid'];
+    return ['display', 'tableid'];
   }
 
   attributeChangedCallback(name, oldValue, newValue) {
-    if (name === 'tableid' & oldValue !== null) {
+    console.log('change', name, oldValue, newValue);
+    if (name === 'tableid' && oldValue !== null) {
       this.display = 'block';
       this.position = 'fixed';
       this.tableID = newValue;
       this.fetchData();
+      return;
     }
+
+    if (name === 'display') {
+      this.display = newValue;
+      this.render();
+      return;
+    }
+
+
   }
 
   render() {
 
+    console.log('display is ', this.display);
+    if (this.display === 'none') {
+      this.shadowRoot.innerHTML = '';
+      return;
+    }
+
     const content = document.createElement('div');
     content.innerHTML = `
       <style>
-        * {
-        color: maroon;
+        .whole {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100vh;
+          background-color: rgba(255, 255, 0, .3);
         }
 
         #bi-form-container {
-          display: ${this.display};
+          display: grid;
+          grid-template-columns: 1fr;
+          padding: .5rem;
           position: ${this.position};
-          background-color: #CCC;
+          width: 300px;
+          grid-gap: 0.2rem;
+          background-color: #FFF;
+          border: 1px solid #EEE;
           top: 10px;
-          left: 10px;
+          left: calc(50vw - 150px);
+          border-radius: 2px;
+        }
+
+        .form-control {
+          display: grid;
+          grid-template-columns: 3fr 8fr;
+          align-items: center;
+        }
+
+        .actions {
+          margin-top: .5rem;
+          display: flex;
+          justify-content: space-between;
+        }
+
+        alert-bar {
+          margin-top: 1rem;
+        }
+
+        h4 {
+          padding: 0;
+          margin: 0;
+        }
+
+        hr {
+          border: 0;
+          clear:both;
+          display:block;
+          width: 100%;
+          background-color:#DDD;
+          height: 1px;
         }
       </style>
 
 
-      <div id="bi-form-container">
+      <div class="whole">
+        <div id="bi-form-container">
+          <h4> Edit Roles </h4>
+          <hr>
 
-        <alert-bar
-          display="${this.err.display}"
-          level="danger"
-          code="${this.err.code}"
-          domain="${this.err.domain}"
-          message="${this.err.message}"
-          original_error="${this.err.original_error}"
-          title="${this.err.title}"
-          type="${this.err.type}"
-        ></alert-bar>
+          ${this.cols.map(x => {
+            return `
+            <div class="form-control">
+              <label for="${x}">${this.format.fields[x].title}</label>
+              <input
+                type="${this.format.fields[x].type}"
+                id="${x}"
+                value="${this.format.fields[x].value}"/>
+            </div>
+            `;
+          }).join('')}
 
-        ${this.cols.map(x => {
-          return `
-            <div>
-            <label for="${x}">${this.format.fields[x].title}</lable>
-            <input
-              type="${this.format.fields[x].type}"
-              id="${x}"
-              value="${this.format.fields[x].value}">
+          <alert-bar
+            display="${this.err.display}"
+            level="danger"
+            code="${this.err.code}"
+            domain="${this.err.domain}"
+            message="${this.err.message}"
+            original_error="${this.err.original_error}"
+            title="${this.err.title}"
+            type="${this.err.type}"
+          ></alert-bar>
+
+          <div class="actions">
+            <button id="closeBtn"><di-ct>close</di-ct></button>
+            <button id="saveBtn"><di-ct>save</di-ct></button>
           </div>
-          `;
-        }).join('')}
 
-        <div class="actions">
-          <button id="saveBtn"><di-ct>save</di-ct></button>
         </div>
-
-        <div> ${this.rawFormat} </div>
       </div>
     `;
 
@@ -142,6 +187,27 @@ class BiForm extends HTMLElement {
     saveBtn.addEventListener('click', () => {
       this.save();
     });
+
+    const closeBtn = this.shadowRoot.querySelector('#closeBtn');
+    closeBtn.addEventListener('click', () => {
+      this.close();
+    });
+
+    const outside = this.shadowRoot.querySelector('.whole');
+    outside.addEventListener('click', (e) => {
+      this.close();
+    });
+
+    const inside = this.shadowRoot.querySelector('#bi-form-container');
+    inside.addEventListener('click', (e) => {
+      e.stopPropagation();
+    });
+
+
+  }
+
+  close() {
+    this.setAttribute('display', 'none');
   }
 
   save() {
@@ -155,11 +221,12 @@ class BiForm extends HTMLElement {
 
         // let result = null
         const ajax = new Ajax();
-        ajax.put(`${this.format.url}/${this.tableID}`, this.elementData)
+        ajax.putNode(`${this.format.url}/${this.tableID}`, this.elementData)
             .subscribe(
               res => {
                 console.log('res ', res)
                 window.SnackBar.message(res.message);
+                this.close();
               },
               err => {
                 const alertBar = this.shadowRoot.querySelector('alert-bar');

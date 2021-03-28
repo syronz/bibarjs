@@ -6,12 +6,12 @@ export const Html = html`
     <bi-table id="biTable" format='{
       "url":"roles",
       "edit": true,
-      "key": "ID",
+      "key": "id",
       "page_sizes": [2, 10, 25, 50, 100, 500],
       "order_by": "id",
       "direction": "desc",
       "fields": {
-        "ID": {
+        "id": {
           "title": "#",
           "list": true,
           "sort": true

@@ -73,6 +73,11 @@ export class Ajax {
     return this;
   }
 
+  putNode(url = '', data = {}) {
+    this.put(`companies/${window.UserInfo.company_id}/nodes/${window.UserInfo.node_id}/${url}`, data);
+    return this;
+  }
+
   get(url = '') {
     this.fetch('get', url);
     return this;
