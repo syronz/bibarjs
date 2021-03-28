@@ -32,7 +32,7 @@ class BiTable extends HTMLElement {
   connectedCallback() {
     console.log('inside bi-table', this.format.url);
     const ajax = new Ajax();
-    ajax.get(this.format.url + this.query)
+    ajax.list(this.format.url + this.query)
         .subscribe(
           res => {
             console.log('res', res);

@@ -43,6 +43,7 @@ export class Ajax {
     this.token = localStorage.getItem('token');
   }
 
+
   fetch(method, url, body) {
     this.response = fetch(`${API_URL}${url}`, {
       method: method,
@@ -74,6 +75,16 @@ export class Ajax {
 
   get(url = '') {
     this.fetch('get', url);
+    return this;
+  }
+
+  list(url = '') {
+    this.get(`companies/${window.UserInfo.company_id}/${url}`);
+    return this;
+  }
+
+  getNode(url = '') {
+    this.get(`companies/${window.UserInfo.company_id}/nodes/${window.UserInfo.node_id}/${url}`);
     return this;
   }
 

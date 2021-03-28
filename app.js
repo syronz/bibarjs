@@ -1,3 +1,4 @@
+import {Router} from './core/route/router.js';
 window.DBVERSION = 3;
 window.LANG = 'ku';
 
@@ -22,9 +23,15 @@ import "./core/custom-elements/alertbar.js";
     const snackBar = document.querySelector('snack-bar');
     window.SnackBar = snackBar;
 
+    window.UserInfo = JSON.parse(localStorage.getItem('user_info'));
+    if (window.UserInfo === undefined
+        | window.UserInfo?.lang === undefined
+        | window.UserInfo?.id === undefined) {
+      const router = new Router(window.routes, window.baseHref)
+      router.navigate('/login');
+    }
+    console.log(window.UserInfo);
 
-    // let r = await wordDB.get('hello');
-    // console.log(r);
   } catch(err) {
     console.warn(err)
   }

@@ -27,7 +27,7 @@ class BiForm extends HTMLElement {
 
   fetchData() {
     const ajax = new Ajax();
-    ajax.get(`${this.format.url}/${this.tableID}`)
+    ajax.getNode(`${this.format.url}/${this.tableID}`)
         .subscribe(
           res => {
             console.log('res2', res);
