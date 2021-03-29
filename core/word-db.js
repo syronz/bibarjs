@@ -10,6 +10,12 @@ const wordsFeed = [
   { id: "message", en: "message", ku: "پەیام" },
   { id: "original error", en: "original error", ku: "هەڵەی بنەڕەتی" },
   { id: "path", en: "path", ku: "ڕێڕەو" },
+  { id: "save", en: "save", ku: "save" },
+  { id: "close", en: "close", ku: "close" },
+  { id: "dashboard", en: "dashboard", ku: "dashboard" },
+  { id: "city", en: "City", ku: "city" },
+  { id: "cities", en: "cities", ku: "cities" },
+  { id: "edit", en: "Edit", ku: "Edit" },
 ];
 
 function promiseReq(req) {

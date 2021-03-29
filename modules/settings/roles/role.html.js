@@ -4,6 +4,7 @@ export const Html = html`
 <div class="frame role">
   <div>
     <bi-table id="biTable" format='{
+      "part": "role",
       "url":"roles",
       "edit": true,
       "key": "id",
@@ -21,13 +22,16 @@ export const Html = html`
           "list": true,
           "sort": true,
           "edit": true,
-          "type": "text"
+          "required": true
         },
         "resources": {
           "title": "Resources",
           "list": true,
           "sort": false,
-          "edit": true
+          "edit": true,
+          "type": "textarea",
+          "rows": 10,
+          "required": true
         },
         "description": {
           "title": "Description",

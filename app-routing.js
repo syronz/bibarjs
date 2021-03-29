@@ -11,6 +11,7 @@ window.routes = [
   { path: 'frame2', module: '/modules/frame/frame.mjs' },
   { path: 'dashboard', module: '/modules/dashboard/dashboard.mjs', children: [
     { path: 'settings/roles', module: '/modules/settings/roles/role.mjs' },
+    { path: 'settings/cities', module: '/modules/settings/cities/city.mjs' },
     { path: 'content/:contentID', module: '/modules/about-content/about-content.mjs' },
     { path: 'about', module: '/modules/about/about.mjs', children: [
       { path: 'sub', module: _ => { console.log('this is sub'); return ['NEXT', 10] } },

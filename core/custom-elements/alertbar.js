@@ -10,7 +10,7 @@ class AlertBar extends HTMLElement {
     const level = this.getAttribute('level');
     const code = this.getAttribute('code');
     const domain = this.getAttribute('domain');
-    const message = this.getAttribute('message');
+    let message = this.getAttribute('message');
     const original_error = this.getAttribute('original_error');
     const title = this.getAttribute('title');
     const type = this.getAttribute('type');
@@ -19,6 +19,10 @@ class AlertBar extends HTMLElement {
     if (display === 'none') {
       this.shadowRoot.innerHTML = '';
       return;
+    }
+
+    if (message === 'undefined' && title !== 'undefined') {
+      message = title;
     }
 
     container.innerHTML = `
@@ -35,10 +39,6 @@ class AlertBar extends HTMLElement {
           color: #721c24;
           background-color: #f8d7da;
           border-color: #f5c6cb;
-        }
-
-        .container {
-          // margin: 0.4rem;
         }
 
         #closeBtn {

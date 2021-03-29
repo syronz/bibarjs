@@ -30,12 +30,10 @@ class BiTable extends HTMLElement {
   }
 
   connectedCallback() {
-    console.log('inside bi-table', this.format.url);
     const ajax = new Ajax();
     ajax.list(this.format.url + this.query)
         .subscribe(
           res => {
-            console.log('res', res);
             this.count = res.data.count ?? 1000;
             const data = res.data.list;
             this.render(data);
@@ -127,7 +125,7 @@ class BiTable extends HTMLElement {
         format='${this.rawFormat}'
         id="editForm"
         type="edit"
-        tableid="28">
+        tableid="2">
       </bi-form>`:
       `<div> +++++++ </div>`}
 
@@ -151,7 +149,14 @@ class BiTable extends HTMLElement {
         </tr>
         ${data.map(x => `
           <tr>
-            ${this.cols.map(y => `<td>${eval(`x.${y}`)}</td>`).join('')}
+            ${this.cols.map(y => {
+              let v = eval(`x.${y}`);
+              if (v === undefined) {
+                return `<td></td>`;
+              }
+              v = this.look(v, this.format.fields[y].look);
+              return `<td>${v}</td>`
+            }).join('')}
 
             ${this.format.edit === true ? 
                 `<td class="action-btn" onclick="biTable.edit(${x[this.format.key]})">
@@ -219,6 +224,15 @@ class BiTable extends HTMLElement {
     console.log('I am edit', id);
     const editForm = this.shadowRoot.querySelector('#editForm');
     editForm.setAttribute('tableid', id);
+  }
+
+  look(v, format) {
+    switch (format) {
+      case 'date':
+        return v.substring(0,10);
+      default:
+        return v;
+    }
   }
 
   async disconnectedCallback() {

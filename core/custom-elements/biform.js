@@ -31,7 +31,6 @@ class BiForm extends HTMLElement {
     ajax.getNode(`${this.format.url}/${this.tableID}`)
         .subscribe(
           res => {
-            console.log('res2', res);
             this.elementData = res.data;
 
             this.cols.map(x => {
@@ -59,7 +58,6 @@ class BiForm extends HTMLElement {
   }
 
   attributeChangedCallback(name, oldValue, newValue) {
-    console.log('change', name, oldValue, newValue);
     if (name === 'tableid' && oldValue !== null) {
       this.display = 'block';
       this.position = 'fixed';
@@ -78,8 +76,6 @@ class BiForm extends HTMLElement {
   }
 
   render() {
-
-    console.log('display is ', this.display);
     if (this.display === 'none') {
       this.shadowRoot.innerHTML = '';
       return;
@@ -103,6 +99,8 @@ class BiForm extends HTMLElement {
           padding: .5rem;
           position: ${this.position};
           width: 300px;
+          max-height: 85vh;
+          overflow: auto;
           grid-gap: 0.2rem;
           background-color: #FFF;
           border: 1px solid #EEE;
@@ -114,7 +112,35 @@ class BiForm extends HTMLElement {
         .form-control {
           display: grid;
           grid-template-columns: 3fr 8fr;
-          align-items: center;
+          align-items: start;
+          font-size: .7rem;
+        }
+
+        .form-control :is(textarea, input) {
+          font-size: .7rem;
+          border-width: 1px;
+        }
+
+        .form-control > label {
+          text-align: right;
+          padding-right: .2rem;
+          font-family: "arial";
+        }
+
+        .form-control .hidden {
+          visibility: hidden;
+        }
+
+        .form-control .required {
+          color: red;
+        }
+
+        .form-control > section {
+          font-family: arial;
+          color: red;
+          padding-top: .15rem;
+          grid-column: 2;
+          display: none;
         }
 
         .actions {
@@ -130,6 +156,7 @@ class BiForm extends HTMLElement {
         h4 {
           padding: 0;
           margin: 0;
+          font-family: "arial";
         }
 
         hr {
@@ -145,19 +172,31 @@ class BiForm extends HTMLElement {
 
       <div class="whole">
         <div id="bi-form-container">
-          <h4> Edit Roles </h4>
+          <h4> <di-ct>${this.type}</di-ct> <di-ct>${this.format.part ?? '- add part to json part -'}</di-ct> </h4>
           <hr>
 
           ${this.cols.map(x => {
-            return `
-            <div class="form-control">
-              <label for="${x}">${this.format.fields[x].title}</label>
-              <input
-                type="${this.format.fields[x].type}"
-                id="${x}"
-                value="${this.format.fields[x].value}"/>
-            </div>
-            `;
+            switch (this.format.fields[x].type) {
+              case 'textarea':
+                return `
+                <div class="form-control">
+                  <label for="${x}">${this.format.fields[x].title}:<span class="${this.format.fields[x].required ? 'required' : 'hidden'}">*</span></label>
+                  <textarea id="${x}" rows="${this.format.fields[x].rows}">${this.format.fields[x].value}</textarea>
+                  <section class="err-${x}"></section>
+                </div>
+                `;
+              default:
+                return `
+                <div class="form-control">
+                  <label for="${x}">${this.format.fields[x].title}:<span class="${this.format.fields[x].required ? 'required' : 'hidden'}">*</span></label>
+                  <input
+                    type="${this.format.fields[x].type}"
+                    id="${x}"
+                    value="${this.format.fields[x].value}"/>
+                  <section class="err-${x}"></section>
+                </div>
+                `;
+            }
           }).join('')}
 
           <alert-bar
@@ -218,6 +257,14 @@ class BiForm extends HTMLElement {
 
     switch (this.type) {
       case 'edit':
+        console.log(this.cols);
+        this.cols.map((x) => {
+          const el = this.shadowRoot.querySelector(`#${x}`);
+          el.style.borderColor = 'black';
+
+          const elErr = this.shadowRoot.querySelector(`.err-${x}`);
+          elErr.style.display = 'none';
+        });
 
         // let result = null
         const ajax = new Ajax();
@@ -231,6 +278,16 @@ class BiForm extends HTMLElement {
               err => {
                 const alertBar = this.shadowRoot.querySelector('alert-bar');
                 alertBar.apply(err.error)
+                if ('invalid_params' in err.error) {
+                  err.error.invalid_params.map((x) => {
+                    const el = this.shadowRoot.querySelector(`#${x.field}`);
+                    el.style.borderColor = 'red';
+
+                    const elErr = this.shadowRoot.querySelector(`.err-${x.field}`);
+                    elErr.style.display = 'block';
+                    elErr.textContent = x.reason;
+                  });
+                }
               });
 
         break;
