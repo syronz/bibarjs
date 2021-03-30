@@ -177,6 +177,20 @@ class BiForm extends HTMLElement {
 
           ${this.cols.map(x => {
             switch (this.format.fields[x].type) {
+              case 'options':
+                return `
+                <div class="form-control">
+                  <label for="${x}">${this.format.fields[x].title}:<span class="${this.format.fields[x].required ? 'required' : 'hidden'}">*</span></label>
+                  <select id="${x}">
+                    ${this.format.fields[x].options.map(v => {
+                      const selected = this.format.fields[x].value == v.value ? 'selected' : '';
+                      return `<option value="${v.value}" ${selected}><di-ct>${v.caption}</di-ct></option>`
+                    }).join('')}
+                  </select>
+                  <section class="err-${x}"></section>
+                </div>
+                `;
+
               case 'textarea':
                 return `
                 <div class="form-control">
@@ -185,6 +199,7 @@ class BiForm extends HTMLElement {
                   <section class="err-${x}"></section>
                 </div>
                 `;
+
               default:
                 return `
                 <div class="form-control">
@@ -252,19 +267,33 @@ class BiForm extends HTMLElement {
   save() {
     this.cols.map(x => {
       const el = this.shadowRoot.querySelector(`#${x}`);
-      this.elementData[x] = el.value;
+
+      console.log(this.format.fields[x].type, x);
+      switch (this.format.fields[x].type) {
+        case 'number':
+          this.elementData[x] = parseInt(el.value, 10);
+          break;
+        default:
+          this.elementData[x] = el.value;
+          break;
+
+      }
+
+      el.style.borderColor = 'black';
+
+      const elErr = this.shadowRoot.querySelector(`.err-${x}`);
+      elErr.style.display = 'none';
     });
+
+    console.log(this.elementData)
 
     switch (this.type) {
       case 'edit':
-        console.log(this.cols);
-        this.cols.map((x) => {
-          const el = this.shadowRoot.querySelector(`#${x}`);
-          el.style.borderColor = 'black';
+        // this.cols.map((x) => {
+        //   const el = this.shadowRoot.querySelector(`#${x}`);
+        //   el.style.borderColor = 'black';
 
-          const elErr = this.shadowRoot.querySelector(`.err-${x}`);
-          elErr.style.display = 'none';
-        });
+        // });
 
         // let result = null
         const ajax = new Ajax();

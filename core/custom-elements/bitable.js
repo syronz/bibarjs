@@ -125,7 +125,7 @@ class BiTable extends HTMLElement {
         format='${this.rawFormat}'
         id="editForm"
         type="edit"
-        tableid="2">
+        tableid="80">
       </bi-form>`:
       `<div> +++++++ </div>`}
 

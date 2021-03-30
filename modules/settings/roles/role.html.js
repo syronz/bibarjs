@@ -3,45 +3,7 @@ import { html } from '../../../core/http.js'
 export const Html = html`
 <div class="frame role">
   <div>
-    <bi-table id="biTable" format='{
-      "part": "role",
-      "url":"roles",
-      "edit": true,
-      "key": "id",
-      "page_sizes": [2, 10, 25, 50, 100, 500],
-      "order_by": "id",
-      "direction": "desc",
-      "fields": {
-        "id": {
-          "title": "#",
-          "list": true,
-          "sort": true
-        },
-        "name": {
-          "title": "Name",
-          "list": true,
-          "sort": true,
-          "edit": true,
-          "required": true
-        },
-        "resources": {
-          "title": "Resources",
-          "list": true,
-          "sort": false,
-          "edit": true,
-          "type": "textarea",
-          "rows": 10,
-          "required": true
-        },
-        "description": {
-          "title": "Description",
-          "list": true,
-          "sort": true,
-          "edit": true,
-          "type": "number"
-        }
-      }
-    }'></bi-table>
+    <bi-table id="biTable" format='{{json format}}'></bi-table>
   </div>
   <p>
     role works fine!

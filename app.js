@@ -11,6 +11,10 @@ import "./core/custom-elements/biform.js";
 import "./core/custom-elements/snackbar.js";
 import "./core/custom-elements/alertbar.js";
 
+Handlebars.registerHelper('json', function(context) {
+    return JSON.stringify(context);
+});
+
 
 (async () => {
   try {

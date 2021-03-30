@@ -11,6 +11,7 @@ window.routes = [
   { path: 'frame2', module: '/modules/frame/frame.mjs' },
   { path: 'dashboard', module: '/modules/dashboard/dashboard.mjs', children: [
     { path: 'settings/roles', module: '/modules/settings/roles/role.mjs' },
+    { path: 'settings/users', module: '/modules/settings/users/user.mjs' },
     { path: 'settings/cities', module: '/modules/settings/cities/city.mjs' },
     { path: 'content/:contentID', module: '/modules/about-content/about-content.mjs' },
     { path: 'about', module: '/modules/about/about.mjs', children: [
@@ -22,12 +23,12 @@ window.routes = [
       },
       ],
     },
-    { path: 'users', module: '/modules/user/user.mjs', children: [
-      { path: ':id', module: '/modules/user-view/user-view.mjs', children: [
-        { path: 'manage', module: _ => {console.log('this is users > 35 > manage'); return ['NEXT', 10]} },
-        { path: 'view', module: _ => { console.log('this is user view'); return ['NEXT', 10] } },
-      ]},
-    ]},
+    // { path: 'users', module: '/modules/user/user.mjs', children: [
+    //   { path: ':id', module: '/modules/user-view/user-view.mjs', children: [
+    //     { path: 'manage', module: _ => {console.log('this is users > 35 > manage'); return ['NEXT', 10]} },
+    //     { path: 'view', module: _ => { console.log('this is user view'); return ['NEXT', 10] } },
+    //   ]},
+    // ]},
     { path: 'contact', module: _ => { console.log('this is contact'); return ['NEXT', 10] } },
   ]},
   { path: 'login', module: '/modules/login/login.mjs' },

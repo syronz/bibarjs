@@ -32,7 +32,7 @@ const navs = [
     scope: "settings",
     links: [
       { name: "roles", resource: "role:read", route: "/dashboard/settings/roles", icon: "nature_people" },
-      { name: "users", resource: "user:read", route: "/settings/users", icon: 'groups' },
+      { name: "users", resource: "user:read", route: "/dashboard/settings/users", icon: 'groups' },
       { name: "cities", resource: "city:read", route: "/dashboard/settings/cities", icon: "holiday_village" },
     ]
   },
