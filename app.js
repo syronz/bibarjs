@@ -34,7 +34,6 @@ Handlebars.registerHelper('json', function(context) {
       const router = new Router(window.routes, window.baseHref)
       router.navigate('/login');
     }
-    console.log(window.UserInfo);
 
   } catch(err) {
     console.warn(err)

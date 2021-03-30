@@ -72,7 +72,10 @@ export default class User extends Init {
             "sort": false,
             "edit": true,
             "required": true,
-            "type": "number"
+            "type": "foreign",
+            "foreign_url": `companies/${window.UserInfo.company_id}/roles?order_by=bas_roles.name&direction=asc&page=0&page_size=10000&select=bas_roles.id,bas_roles.name`,
+            "foreign_value_key": "id",
+            "foreign_caption_key": "name"
           },
           "status": {
             "title": "Status",

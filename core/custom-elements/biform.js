@@ -177,39 +177,66 @@ class BiForm extends HTMLElement {
 
           ${this.cols.map(x => {
             switch (this.format.fields[x].type) {
+
+              case 'foreign':
+                console.log(this.format.fields[x]);
+                const ajax = new Ajax();
+                ajax.get(`${this.format.fields[x].foreign_url}`)
+                    .subscribe(
+                      res => {
+                        console.log('res ', res);
+                        const selectEl = this.shadowRoot.querySelector(`#${x}`);
+                        const options = res.data.list.map(s => `<option value="${s[this.format.fields[x].foreign_value_key]}">${s[this.format.fields[x].foreign_caption_key]}</option>`).join('');
+                        selectEl.innerHTML = options;
+                        // window.SnackBar.message(res.message);
+                      },
+                      err => {
+                        console.log('err ', err);
+                        const alertBar = this.shadowRoot.querySelector('alert-bar');
+                        alertBar.apply(err.error)
+                      });
+                return `
+                  <div class="form-control">
+                    <label for="${x}">${this.format.fields[x].title}:<span class="${this.format.fields[x].required ? 'required' : 'hidden'}">*</span></label>
+                    <select id="${x}"></select>
+                    <section class="err-${x}"></section>
+                  </div>
+                `;
+              break;
+
               case 'options':
                 return `
-                <div class="form-control">
-                  <label for="${x}">${this.format.fields[x].title}:<span class="${this.format.fields[x].required ? 'required' : 'hidden'}">*</span></label>
-                  <select id="${x}">
-                    ${this.format.fields[x].options.map(v => {
-                      const selected = this.format.fields[x].value == v.value ? 'selected' : '';
-                      return `<option value="${v.value}" ${selected}><di-ct>${v.caption}</di-ct></option>`
-                    }).join('')}
-                  </select>
-                  <section class="err-${x}"></section>
-                </div>
+                  <div class="form-control">
+                    <label for="${x}">${this.format.fields[x].title}:<span class="${this.format.fields[x].required ? 'required' : 'hidden'}">*</span></label>
+                    <select id="${x}">
+                      ${this.format.fields[x].options.map(v => {
+                        const selected = this.format.fields[x].value == v.value ? 'selected' : '';
+                        return `<option value="${v.value}" ${selected}><di-ct>${v.caption}</di-ct></option>`
+                      }).join('')}
+                    </select>
+                    <section class="err-${x}"></section>
+                  </div>
                 `;
 
               case 'textarea':
                 return `
-                <div class="form-control">
-                  <label for="${x}">${this.format.fields[x].title}:<span class="${this.format.fields[x].required ? 'required' : 'hidden'}">*</span></label>
-                  <textarea id="${x}" rows="${this.format.fields[x].rows}">${this.format.fields[x].value}</textarea>
-                  <section class="err-${x}"></section>
-                </div>
+                  <div class="form-control">
+                    <label for="${x}">${this.format.fields[x].title}:<span class="${this.format.fields[x].required ? 'required' : 'hidden'}">*</span></label>
+                    <textarea id="${x}" rows="${this.format.fields[x].rows}">${this.format.fields[x].value}</textarea>
+                    <section class="err-${x}"></section>
+                  </div>
                 `;
 
               default:
                 return `
-                <div class="form-control">
-                  <label for="${x}">${this.format.fields[x].title}:<span class="${this.format.fields[x].required ? 'required' : 'hidden'}">*</span></label>
-                  <input
-                    type="${this.format.fields[x].type}"
-                    id="${x}"
-                    value="${this.format.fields[x].value}"/>
-                  <section class="err-${x}"></section>
-                </div>
+                  <div class="form-control">
+                    <label for="${x}">${this.format.fields[x].title}:<span class="${this.format.fields[x].required ? 'required' : 'hidden'}">*</span></label>
+                    <input
+                      type="${this.format.fields[x].type}"
+                      id="${x}"
+                      value="${this.format.fields[x].value}"/>
+                    <section class="err-${x}"></section>
+                  </div>
                 `;
             }
           }).join('')}
@@ -271,6 +298,7 @@ class BiForm extends HTMLElement {
       console.log(this.format.fields[x].type, x);
       switch (this.format.fields[x].type) {
         case 'number':
+        case 'foreign':
           this.elementData[x] = parseInt(el.value, 10);
           break;
         default:
@@ -287,6 +315,8 @@ class BiForm extends HTMLElement {
 
     console.log(this.elementData)
 
+    const ajax = new Ajax();
+
     switch (this.type) {
       case 'edit':
         // this.cols.map((x) => {
@@ -296,7 +326,6 @@ class BiForm extends HTMLElement {
         // });
 
         // let result = null
-        const ajax = new Ajax();
         ajax.putNode(`${this.format.url}/${this.tableID}`, this.elementData)
             .subscribe(
               res => {
