@@ -9,7 +9,7 @@ export const Html = html`
   <div class="age">
     handlebars: {{ age }}
   </div>
-  <button id="getUsers" pOnclick="getUsers()" > get users </button>
+  <button id="getUsers"  > get users </button>
   <button pOnclick="deleteUsers()" > delete users </button>
   <button pOnclick="sayHello()" > hello </button>
   <div>

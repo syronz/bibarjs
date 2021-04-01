@@ -39,7 +39,7 @@ class BiForm extends HTMLElement {
             this.render();
           },
           err => {
-            console.warn('err2', err);
+            console.warn('err', err);
             // const alertBar = this.shadowRoot.querySelector('alert-bar');
             // alertBar.apply(err.error)
             this.err = err.error;
@@ -50,7 +50,14 @@ class BiForm extends HTMLElement {
   }
 
   connectedCallback() {
-    this.fetchData();
+    if (this.type === 'edit') {
+      this.fetchData();
+    } else {
+      this.cols.map(x => {
+        this.format.fields[x].value = '';
+      });
+      this.elementData = this.format.fields;
+    }
   }
 
   static get observedAttributes() {
@@ -67,6 +74,7 @@ class BiForm extends HTMLElement {
     }
 
     if (name === 'display') {
+      console.log('******', this.cols);
       this.display = newValue;
       this.render();
       return;
@@ -81,6 +89,7 @@ class BiForm extends HTMLElement {
       return;
     }
 
+    console.log('....', this.cols);
     const content = document.createElement('div');
     content.innerHTML = `
       <style>
@@ -298,7 +307,7 @@ class BiForm extends HTMLElement {
       console.log(this.format.fields[x].type, x);
       switch (this.format.fields[x].type) {
         case 'number':
-        case 'foreign':
+        case 'number':
           this.elementData[x] = parseInt(el.value, 10);
           break;
         default:
@@ -319,14 +328,31 @@ class BiForm extends HTMLElement {
 
     switch (this.type) {
       case 'edit':
-        // this.cols.map((x) => {
-        //   const el = this.shadowRoot.querySelector(`#${x}`);
-        //   el.style.borderColor = 'black';
-
-        // });
-
-        // let result = null
         ajax.putNode(`${this.format.url}/${this.tableID}`, this.elementData)
+            .subscribe(
+              res => {
+                console.log('res ', res)
+                window.SnackBar.message(res.message);
+                this.close();
+              },
+              err => {
+                const alertBar = this.shadowRoot.querySelector('alert-bar');
+                alertBar.apply(err.error)
+                if ('invalid_params' in err.error) {
+                  err.error.invalid_params.map((x) => {
+                    const el = this.shadowRoot.querySelector(`#${x.field}`);
+                    el.style.borderColor = 'red';
+
+                    const elErr = this.shadowRoot.querySelector(`.err-${x.field}`);
+                    elErr.style.display = 'block';
+                    elErr.textContent = x.reason;
+                  });
+                }
+              });
+
+        break;
+      case 'create':
+        ajax.postCompany(`${this.format.url}/${this.tableID}`, this.elementData)
             .subscribe(
               res => {
                 console.log('res ', res)

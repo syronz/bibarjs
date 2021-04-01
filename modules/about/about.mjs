@@ -21,13 +21,13 @@ export default class About extends Init {
     document.querySelector(".age").style.backgroundColor = "red";
   }
 
-  getUsers = async _ => {
-    const users = await fetch('https://jsonplaceholder.typicode.com/users')
-      .then((res) => res.json())
-    this.data.users = users
+  // getUsers = async _ => {
+  //   const users = await fetch('https://jsonplaceholder.typicode.com/users')
+  //     .then((res) => res.json())
+  //   this.data.users = users
 
-    this.render(this.data)
-  }
+  //   this.render(this.data)
+  // }
 
   deleteUsers = _ => {
     this.data.users = []

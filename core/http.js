@@ -68,6 +68,11 @@ export class Ajax {
     return this;
   }
 
+  postCompany(url = '', data = {}) {
+    this.post(`companies/${window.UserInfo.company_id}/${url}`, data);
+    return this;
+  }
+
   put(url = '', data = {}) {
     this.fetch('put', url, data);
     return this;

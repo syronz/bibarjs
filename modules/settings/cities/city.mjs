@@ -25,6 +25,7 @@ export default class City extends Init {
             "list": true,
             "sort": true,
             "edit": true,
+            "create": true,
             "required": true
           },
           "notes": {
@@ -32,6 +33,7 @@ export default class City extends Init {
             "list": true,
             "sort": true,
             "edit": true,
+            "create": true,
             "type": "text"
           },
           "created_at": {
@@ -54,6 +56,12 @@ export default class City extends Init {
   }
 
   async start() {
-    this.render()
+    // this.render()
+    const btn = document.querySelector('#addCityBtn')
+    console.log(btn);
+    btn.addEventListener('click', (e) => {
+      const createForm = document.querySelector('#createForm');
+      createForm.setAttribute('display', 'block');
+    })
   }
 }
