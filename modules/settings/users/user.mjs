@@ -24,7 +24,22 @@ export default class User extends Init {
             "title": "username",
             "list": true,
             "sort": true,
-            "edit": false
+            "edit": false,
+            "create": true
+          },
+          "password": {
+            "title": "password",
+            "list": false,
+            "sort": false,
+            "edit": true,
+            "create": true
+          },
+          "name_en": {
+            "title": "name",
+            "list": false,
+            "sort": false,
+            "edit": false,
+            "create": true
           },
           "code": {
             "title": "Code",
@@ -32,7 +47,8 @@ export default class User extends Init {
             "sort": true,
             "edit": true,
             "required": true,
-            "type": "text"
+            "type": "text",
+            "create": true
           },
           "name_en": {
             "title": "Name",
@@ -40,7 +56,8 @@ export default class User extends Init {
             "sort": true,
             "edit": true,
             "required": true,
-            "type": "text"
+            "type": "text",
+            "create": true
           },
           "lang": {
             "title": "Language",
@@ -58,13 +75,15 @@ export default class User extends Init {
                 "value": "ku",
                 "caption": "Kurdish"
               }
-            ]
+            ],
+            "create": true
           },
           "role": {
             "title": "Role",
             "list": true,
             "sort": true,
-            "edit": false
+            "edit": false,
+            "create": false
           },
           "role_id": {
             "title": "Role",
@@ -75,7 +94,8 @@ export default class User extends Init {
             "type": "foreign",
             "foreign_url": `companies/${window.UserInfo.company_id}/roles?order_by=bas_roles.name&direction=asc&page=0&page_size=10000&select=bas_roles.id,bas_roles.name`,
             "foreign_value_key": "id",
-            "foreign_caption_key": "name"
+            "foreign_caption_key": "name",
+            "create": true
           },
           "status": {
             "title": "Status",
@@ -92,7 +112,8 @@ export default class User extends Init {
                 "value": "inactive",
                 "caption": "Inactive"
               }
-            ]
+            ],
+            "create": true
           },
           "created_at": {
             "title": "Created At",
@@ -114,6 +135,12 @@ export default class User extends Init {
   }
 
   async start() {
-    this.render()
+    // this.render()
+    const btn = document.querySelector('#addUserBtn')
+    console.log(btn);
+    btn.addEventListener('click', (e) => {
+      const createForm = document.querySelector('#createForm');
+      createForm.setAttribute('display', 'block');
+    })
   }
 }

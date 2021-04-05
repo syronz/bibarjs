@@ -3,3 +3,11 @@ port = "3000"
 public_dir = "."
 index_file = "index.html"
 cache_control = 31536000
+
+[[conditions]]
+source = 'api/restapi/v1'
+dest = 'http://127.0.0.1:7173/'
+
+[[conditions]]
+source = '11'
+dest = '2'

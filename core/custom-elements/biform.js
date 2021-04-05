@@ -18,6 +18,7 @@ class BiForm extends HTMLElement {
     this.format = JSON.parse(this.rawFormat);
 
 
+
     this.cols = [];
     for (const el in this.format.fields) {
       if (this.format.fields[el][this.type] === true) {
@@ -27,6 +28,9 @@ class BiForm extends HTMLElement {
   }
 
   fetchData() {
+    if (this.display === 'none') {
+      return;
+    }
     const ajax = new Ajax();
     ajax.getNode(`${this.format.url}/${this.tableID}`)
         .subscribe(
@@ -74,7 +78,6 @@ class BiForm extends HTMLElement {
     }
 
     if (name === 'display') {
-      console.log('******', this.cols);
       this.display = newValue;
       this.render();
       return;
@@ -279,6 +282,7 @@ class BiForm extends HTMLElement {
     });
 
     const closeBtn = this.shadowRoot.querySelector('#closeBtn');
+    console.log("...... biform ", closeBtn);
     closeBtn.addEventListener('click', () => {
       this.close();
     });
@@ -297,16 +301,26 @@ class BiForm extends HTMLElement {
   }
 
   close() {
+    console.log(" close happened !!! ");
     this.setAttribute('display', 'none');
   }
 
-  save() {
+  parseElements(type) {
+    if (type === 'create') {
+      this.elementData = {};
+    }
+
     this.cols.map(x => {
       const el = this.shadowRoot.querySelector(`#${x}`);
+      console.log(this.format.fields[x][type] !== true, x)
+      if (this.format.fields[x][type] !== true) {
+        delete this.elementData[x];
+        return;
+      }
 
       console.log(this.format.fields[x].type, x);
       switch (this.format.fields[x].type) {
-        case 'number':
+        case 'foreign':
         case 'number':
           this.elementData[x] = parseInt(el.value, 10);
           break;
@@ -321,6 +335,14 @@ class BiForm extends HTMLElement {
       const elErr = this.shadowRoot.querySelector(`.err-${x}`);
       elErr.style.display = 'none';
     });
+
+    delete this.elementData.id
+    console.log("......>>>>>>>>>>>>>>>>>>>", this.elementData.id);
+
+  }
+
+  save() {
+    this.parseElements(this.type);
 
     console.log(this.elementData)
 

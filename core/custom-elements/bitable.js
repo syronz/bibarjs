@@ -126,7 +126,7 @@ class BiTable extends HTMLElement {
         id="editForm"
         type="edit"
         display="none"
-        tableid="8">
+        >
       </bi-form>`:
       `<div> +++++++ </div>`}
 
